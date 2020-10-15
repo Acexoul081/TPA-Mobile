@@ -1,0 +1,3 @@
+include ':rawg'
+include ':app'
+rootProject.name = "GoGames"
