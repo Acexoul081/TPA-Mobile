@@ -3,6 +3,8 @@ package edu.bluejack20_1.gogames.rawg.di.application
 import dagger.Component
 import edu.bluejack20_1.gogames.rawg.RawgApplication
 import edu.bluejack20_1.gogames.rawg.di.ApplicationScope
+import edu.bluejack20_1.gogames.rawg.di.detailview.DetailScreenComponent
+import edu.bluejack20_1.gogames.rawg.di.detailview.DetailedScreenViewModelModule
 import edu.bluejack20_1.gogames.rawg.di.gameview.GameScreenComponent
 import edu.bluejack20_1.gogames.rawg.di.gameview.GameScreenViewModelModule
 
@@ -14,4 +16,9 @@ interface ApplicationComponent{
     fun provideGameScreenComponent(
         gameScreenViewModelModule: GameScreenViewModelModule
     ): GameScreenComponent
+
+    fun provideDetailScreenComponent(
+        detailedScreenViewModelModule: DetailedScreenViewModelModule
+    ): DetailScreenComponent
+
 }

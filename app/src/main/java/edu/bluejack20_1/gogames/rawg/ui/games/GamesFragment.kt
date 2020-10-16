@@ -8,6 +8,8 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekn.gruzer.rawg.entity.Game
 import edu.bluejack20_1.gogames.R
@@ -101,13 +103,13 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister {
 
 
     override fun onRecycleViewItemSelected(item: Game) {
-//        val direction: NavDirections =
-//            GamesFragmentDirections.actionMainFragmentToGameDetailFragment(
-//                item.id.toString(),
-//                item.name,
-//                item.background_image
-//            )
-//        findNavController().navigate(direction)
+        val direction: NavDirections =
+            GamesFragmentDirections.actionGamesFragmentToGameDetailFragment(
+                item.id.toString(),
+                item.name,
+                item.background_image
+            )
+        findNavController().navigate(direction)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
