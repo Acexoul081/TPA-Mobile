@@ -8,6 +8,7 @@ import com.ekn.gruzer.rawg.network.RawgServiceApi
 import edu.bluejack20_1.gogames.rawg.ui.games.GamesViewModel
 import io.branch.referral.Branch
 import io.branch.referral.BranchError
+import kotlinx.android.synthetic.main.activity_news.*
 import org.json.JSONObject
 
 class NewsActivity : AppCompatActivity() {
@@ -15,7 +16,10 @@ class NewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
-
+        promo_textView.setOnClickListener{
+            val intent = Intent(this, PromoActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 

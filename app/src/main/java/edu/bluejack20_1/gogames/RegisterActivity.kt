@@ -31,6 +31,10 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+        skip_textView.setOnClickListener{
+            val intent = Intent(this, NewsActivity::class.java)
+            startActivity(intent)
+        }
         photo_textView.setOnClickListener{
             Log.d("RegisterActivity", "show photo selector")
 
