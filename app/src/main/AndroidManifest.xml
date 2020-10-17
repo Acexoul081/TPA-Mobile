@@ -21,14 +21,26 @@
         <activity android:name=".NewsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+<!--            Deeplink intent filter-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="details"
+                    android:scheme="gogames"/>
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity">
 
         </activity>
         <activity android:name=".LoginActivity" />
+        <!-- Branch init -->
+        <meta-data android:name="edu.bluejack20_1.gogames" android:value="key_live_chP5L24qlMIfpOmodiHfIpkfwAkQrEXa" />
+        <meta-data android:name="edu.bluejack20_1.gogames.test" android:value="key_test_fbG6N58AmRGmiIcjvcA4DfkaqzdVEA1s" />
+        <meta-data android:name="edu.bluejack20_1.gogames.TestMode" android:value="false" />     <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
     </application>
 
 </manifest>

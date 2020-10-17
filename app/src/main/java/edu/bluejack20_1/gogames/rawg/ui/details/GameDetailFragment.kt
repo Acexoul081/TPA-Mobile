@@ -1,6 +1,7 @@
 package edu.bluejack20_1.gogames.rawg.ui.details
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import androidx.fragment.app.Fragment
@@ -68,13 +69,22 @@ class GameDetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_game_detail, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         details_game_title_txt.text = gameTitle
         LoadImage(details_image, gameImage)
+        share_btn.setOnClickListener{
+            val message = "https://gogames/details/$gameID"
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, message)
+            intent.type = "text/plain"
 
+            startActivity(Intent.createChooser(intent, "Share to : "))
+        }
         viewModel.viewState.observe(viewLifecycleOwner, Observer { render(it) })
         viewModel.handleIntent(DetailViewIntent.FetchData(gameID))
 
