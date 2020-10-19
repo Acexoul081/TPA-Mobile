@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -16,9 +17,14 @@ import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
+
+    private lateinit var mAuth : FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        mAuth = FirebaseAuth.getInstance()
 
         register_button.setOnClickListener{
            performRegister()
@@ -68,18 +74,30 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this,"Please enter text in email/pw", Toast.LENGTH_SHORT).show()
             return
         }
+        //validate email unique
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            Toast.makeText(this,"valid email required", Toast.LENGTH_SHORT).show()
+            email_editText.requestFocus()
+            return
+        }
+        //validate pass numeric
+//        if(pass.length < 6 && !pass.is){
+//
+//        }
 
         Log.d("MainActivity", "username : "+ username)
         Log.d("MainActivity", "email: $email")
         Log.d("MainActivity", "passs: "+pass)
 
         //Firebase auth
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pass)
+        mAuth.createUserWithEmailAndPassword(email,pass)
             .addOnCompleteListener{
                 if (!it.isSuccessful) return@addOnCompleteListener
 
                 Log.d("RegisterActivity","Success created user with uid: ${it.result?.user?.uid}")
                 uploadImageToFirebaseStorage()
+                val intent = Intent(this, NewsActivity::class.java)
+                startActivity(intent)
             }
             .addOnFailureListener{
                 Log.d("RegisterActivity", "Failed create user: ${it.message}")
