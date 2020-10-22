@@ -1,3 +1,2 @@
-include ':rawg'
 include ':app'
-rootProject.name = "GoGames"
+rootProject.name = "gogames"
