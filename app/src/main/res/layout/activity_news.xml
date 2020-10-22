@@ -17,13 +17,6 @@
         app:navGraph = "@navigation/app_navigation">
     </fragment>
 
-    <TextView
-        android:id="@+id/promo_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Skip to Promo"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
 
 
 </LinearLayout>
