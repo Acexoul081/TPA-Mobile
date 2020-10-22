@@ -3,4 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="slateGray">#708090</color>
+    <color name="White">#FFFFFF</color>
+    <color name="dimgay">#696969</color>
+    <color name="electricBlue">#1E90FF</color>
+    <color name="skyBlue">#87CEFA</color>
+    <color name="lightGray">#D3D3D3</color>
 </resources>
