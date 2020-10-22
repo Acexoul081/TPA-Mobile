@@ -33,6 +33,8 @@
             <intent-filter>
         <activity android:name=".MainActivity">
             <intent-filter>
+        <activity android:name=".MainActivity">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 =======
 >>>>>>> parent of b61d9cb... promo api done
