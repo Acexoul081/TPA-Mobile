@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "733155017071",
+    "firebase_url": "https://gogames-7ebe1.firebaseio.com",
+    "project_id": "gogames-7ebe1",
+    "storage_bucket": "gogames-7ebe1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733155017071:android:401b235d0eea7a86b6289a",
+        "android_client_info": {
+          "package_name": "com.example.communitypage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733155017071-urku35sd6k59hh3t2croa7f8c58mvgsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9DnhndQHsfQJIrwHnHNxXv34DYwdG1H8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733155017071-urku35sd6k59hh3t2croa7f8c58mvgsb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733155017071:android:143f896f42326059b6289a",
+        "android_client_info": {
+          "package_name": "edu.bluejack20_1.gogames"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733155017071-urku35sd6k59hh3t2croa7f8c58mvgsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9DnhndQHsfQJIrwHnHNxXv34DYwdG1H8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733155017071-urku35sd6k59hh3t2croa7f8c58mvgsb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

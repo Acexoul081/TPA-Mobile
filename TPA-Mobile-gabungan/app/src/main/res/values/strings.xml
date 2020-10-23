@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">GoGames</string>
+    <string name="page_title">TPA Mobile</string>
+    <string name="favorite">help</string>
+    <string name="content_description_favorite">Notification</string>
+    <string name="search">search</string>
+    <string name="content_description_search">search</string>
+    <string name="more">more</string>
+    <string name="content_description_more">more</string>
+    <string name="UserImage">UserImage</string>
+    <string name="Username">Username</string>
+    <string name="profile">Profile</string>
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+    <string name="community">Community</string>
+    <string name="news">News</string>
+    <string name="open_navigation">Open navigation drawer</string>
+    <string name="close_navigation">Close navigation drawer</string>
+    <string name="navigation">navigation</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fab_content_desc">addThread</string>
+    <string-array name="category">
+        <item>Developer</item>
+        <item>Game</item>
+        <item>Other</item>
+    </string-array>
+</resources>
