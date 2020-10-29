@@ -4,14 +4,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import androidx.appcompat.app.ActionBarDrawerToggle
 import com.ekn.gruzer.rawg.network.RawgServiceApi
 import edu.bluejack20_1.gogames.rawg.ui.games.GamesViewModel
 import io.branch.referral.Branch
 import io.branch.referral.BranchError
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_news.*
+import kotlinx.android.synthetic.main.activity_news.Navigation
 import org.json.JSONObject
 
 class NewsActivity : AppCompatActivity() {
+
+    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +27,39 @@ class NewsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        toggle = ActionBarDrawerToggle(this, drawer_layoutn, R.string.open_navigation, R.string.close_navigation)
+        drawer_layoutn.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+//        topAppBar.setNavigationOnClickListener {
+//            drawer_layoutn.openDrawer(Gravity.START)
+//        }
+
+        Navigation.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.nav_community -> moveToCommunity()
+                R.id.nav_news -> moveToNews()
+                R.id.nav_promo -> moveToPromo()
+            }
+            true
+        }
+    }
+
+    fun moveToPromo() {
+        val intent = Intent(this, PromoActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun moveToCommunity(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun moveToNews() {
+        val intent = Intent(this, NewsActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onStart() {
