@@ -85,9 +85,9 @@ class RegisterActivity : AppCompatActivity() {
 //
 //        }
 
-        Log.d("MainActivity", "username : "+ username)
+        Log.d("MainActivity", "username : $username")
         Log.d("MainActivity", "email: $email")
-        Log.d("MainActivity", "passs: "+pass)
+        Log.d("MainActivity", "passs: $pass")
 
         //Firebase auth
         mAuth.createUserWithEmailAndPassword(email,pass)

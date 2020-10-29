@@ -15,6 +15,7 @@ import edu.bluejack20_1.gogames.allCommunity.DeveloperThread.DeveloperThread
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.header_hamburger.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -115,6 +116,7 @@ class MainActivity : AppCompatActivity() {
                     checkUser()
                     val uid = auth.currentUser?.uid
                     val username = "dummy"
+                    userName.text = username
                     if (uid != null) {
                         sharedPreferences(uid, username)
                     }

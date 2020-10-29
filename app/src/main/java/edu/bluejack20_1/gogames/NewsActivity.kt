@@ -1,19 +1,20 @@
 package edu.bluejack20_1.gogames
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import com.ekn.gruzer.rawg.network.RawgServiceApi
-import edu.bluejack20_1.gogames.rawg.ui.games.GamesViewModel
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import io.branch.referral.Branch
 import io.branch.referral.BranchError
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_news.*
-import kotlinx.android.synthetic.main.activity_news.Navigation
+import kotlinx.android.synthetic.main.header_hamburger.*
 import org.json.JSONObject
+
 
 class NewsActivity : AppCompatActivity() {
 
@@ -27,7 +28,12 @@ class NewsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        toggle = ActionBarDrawerToggle(this, drawer_layoutn, R.string.open_navigation, R.string.close_navigation)
+        toggle = ActionBarDrawerToggle(
+            this,
+            drawer_layoutn,
+            R.string.open_navigation,
+            R.string.close_navigation
+        )
         drawer_layoutn.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -45,7 +51,11 @@ class NewsActivity : AppCompatActivity() {
             }
             true
         }
+        
+        val header: View = (findViewById<NavigationView>(R.id.Navigation)).getHeaderView(0)
+        (header.findViewById(R.id.userName) as TextView).text = FirebaseAuth.getInstance().currentUser?.email
     }
+
 
     fun moveToPromo() {
         val intent = Intent(this, PromoActivity::class.java)
@@ -65,7 +75,6 @@ class NewsActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         // Branch init
-
         Branch.sessionBuilder(this).withCallback(branchListener).withData(this.intent?.data).init()
     }
 

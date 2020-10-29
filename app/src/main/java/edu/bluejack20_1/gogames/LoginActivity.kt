@@ -17,6 +17,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import kotlinx.android.synthetic.main.activiy_login.*
 
 class LoginActivity : AppCompatActivity(){
@@ -39,6 +40,15 @@ class LoginActivity : AppCompatActivity(){
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this){
                     if(it.isSuccessful){
+                        val pref = PreferencesConfig(this)
+                        val uid = FirebaseAuth.getInstance().currentUser?.uid
+                        val email = FirebaseAuth.getInstance().currentUser?.email
+
+                        if (uid != null) {
+                            if (email != null) {
+                                pref.putUser(uid, email)
+                            }
+                        }
                         val intent = Intent(this, NewsActivity::class.java)
                         startActivity(intent)
                     }else{
