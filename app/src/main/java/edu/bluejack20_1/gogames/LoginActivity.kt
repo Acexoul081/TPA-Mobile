@@ -37,7 +37,16 @@ class LoginActivity : AppCompatActivity(){
             Log.d("loginActivity", "login with $email $password")
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
-//                .addOnCompleteListener()
+                .addOnCompleteListener(this){
+                    if(it.isSuccessful){
+                        val intent = Intent(this, NewsActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                        it.exception?.message?.let{
+                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
         }
 
         backRegister_textView.setOnClickListener{

@@ -95,7 +95,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (!it.isSuccessful) return@addOnCompleteListener
 
                 Log.d("RegisterActivity","Success created user with uid: ${it.result?.user?.uid}")
-                uploadImageToFirebaseStorage()
+//                uploadImageToFirebaseStorage()
                 val intent = Intent(this, NewsActivity::class.java)
                 startActivity(intent)
             }
@@ -132,6 +132,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
     }
+
 }
 
 class User(val uid: String, val username:String, val profileImageUrl: String)
