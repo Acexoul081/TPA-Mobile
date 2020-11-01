@@ -6,9 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekn.gruzer.rawg.entity.Game
+import com.ekn.gruzer.rawg.entity.Genre
 import com.ekn.gruzer.rawg.network.RawgData
 import edu.bluejack20_1.gogames.rawg.repository.DataState
 import edu.bluejack20_1.gogames.rawg.repository.GamesRepository
+import edu.bluejack20_1.gogames.rawg.repository.GenreRepository
 import edu.bluejack20_1.gogames.rawg.utils.currentFormated
 import edu.bluejack20_1.gogames.rawg.utils.formatedDate
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class GamesViewModel (private val repository: GamesRepository) : ViewModel() {
+class GamesViewModel (private val repository: GamesRepository, private val genreRepository: GenreRepository) : ViewModel() {
     private val _viewState: MutableLiveData<GamesViewState> = MutableLiveData()
 
     val viewState: LiveData<GamesViewState>
@@ -28,10 +30,21 @@ class GamesViewModel (private val repository: GamesRepository) : ViewModel() {
         is GamesViewIntent.SearchGames -> getGames(keyword = keyword)
     }
 
+    fun performGenre(){
+        getGenres()
+    }
+
     private fun getGames(dates: String? = null, keyword: String? = null) {
         viewModelScope.launch (Dispatchers.Main )  {
             _viewState.value = GamesViewState.IsLoading
             performRequest(dates = dates, keyword = keyword)
+        }
+    }
+
+    private fun getGenres(){
+        viewModelScope.launch (Dispatchers.Main) {
+            _viewState.value = GamesViewState.IsLoading
+            performRequestGenre()
         }
     }
 
@@ -41,12 +54,25 @@ class GamesViewModel (private val repository: GamesRepository) : ViewModel() {
         is DataState.Success -> _viewState.postValue(GamesViewState.ShowData(result.data?.result))
     }
 
+    private fun handleGenderResult(result: DataState<RawgData<List<Genre>>>) = when (result) {
+        is DataState.NetworkError -> _viewState.postValue(GamesViewState.Error(result.message))
+        is DataState.Error -> _viewState.postValue(GamesViewState.Error(result.error))
+        is DataState.Success -> _viewState.postValue(GamesViewState.ShowGenre(result.data?.result))
+    }
+
     private suspend fun performRequest(dates: String? = null, keyword: String? = null) = withContext(Dispatchers.IO) {
         delay(5000)
         val result = repository.getGames(dates, keyword)
-        Log.d("keyword", result.toString())
         withContext(Dispatchers.Main) {_viewState.value = GamesViewState.IsDoneLoading}
         handleResult(result)
+    }
+
+    private suspend fun performRequestGenre() = withContext(Dispatchers.IO) {
+        delay(5000)
+        val result = genreRepository.getGenres()
+        withContext(Dispatchers.Main) {_viewState.value = GamesViewState.IsDoneLoading}
+        Log.d("genre", result.toString())
+        handleGenderResult(result)
     }
 
     private fun getDates(): String {

@@ -5,6 +5,8 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,18 +14,21 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekn.gruzer.rawg.entity.Game
+import com.ekn.gruzer.rawg.entity.Genre
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.rawg.RawgApplication
 import edu.bluejack20_1.gogames.rawg.di.gameview.GameScreenViewModelModule
 import kotlinx.android.synthetic.main.fragment_games.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
+/**-
  * A simple [Fragment] subclass.
  * Use the [GamesFragment.newInstance] factory method to
  * create an instance of this fragment.
@@ -33,6 +38,7 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister {
 
     private var searchView: SearchView? = null
     private var queryTextListener: SearchView.OnQueryTextListener? = null
+    private lateinit var spinner: Spinner
     @Inject
     lateinit var viewModel: GamesViewModel
 
@@ -70,17 +76,19 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister {
             layoutManager = LinearLayoutManager(this@GamesFragment.context)
             adapter = gamesAdapter
         }
+
         viewModel.viewState.observe(viewLifecycleOwner, Observer { render(it) })
         viewModel.perform(GamesViewIntent.FetchFutureRelease)
+        viewModel.performGenre()
 
     }
 
-    private fun  render(viewState: GamesViewState) = when (viewState) {
+    private fun render(viewState: GamesViewState) = when (viewState) {
         is GamesViewState.IsLoading -> loadingInProgress()
         is GamesViewState.IsDoneLoading -> loadingIsDone()
         is GamesViewState.ShowData -> displayGames(viewState.games)
         is GamesViewState.Error -> showError(viewState.error)
-
+        is GamesViewState.ShowGenre -> displayGenre(viewState.genre)
     }
 
     private fun showError(error: String){
@@ -101,6 +109,10 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister {
         }
     }
 
+    private fun displayGenre(genres: List<Genre>?){
+        val arrayList = ArrayList<String>(genres?.map { it.name })
+        genre_spinner.adapter = ArrayAdapter<String>(activity as Context, R.layout.style_spinner, arrayList)
+    }
 
     override fun onRecycleViewItemSelected(item: Game) {
         val direction: NavDirections =
@@ -125,7 +137,6 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister {
             searchView!!.setSearchableInfo(searchManager.getSearchableInfo(activity!!.componentName))
             queryTextListener = object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
-                    Log.d("inDebug", newText)
                     return true
                 }
 

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "733155017071-0hlb7b2sav5c3jvj3tjo2i21dc3330fq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.communitypage",
+            "certificate_hash": "52950cad603f00cbb1bf8574085727dfcc1fe3e7"
+          }
+        },
+        {
           "client_id": "733155017071-urku35sd6k59hh3t2croa7f8c58mvgsb.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -43,6 +51,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "733155017071-gkub99faffajnrvcsr63ompqc6an29nf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.bluejack20_1.gogames",
+            "certificate_hash": "52950cad603f00cbb1bf8574085727dfcc1fe3e7"
+          }
+        },
         {
           "client_id": "733155017071-urku35sd6k59hh3t2croa7f8c58mvgsb.apps.googleusercontent.com",
           "client_type": 3

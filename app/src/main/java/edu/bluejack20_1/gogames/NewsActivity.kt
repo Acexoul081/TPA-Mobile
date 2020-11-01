@@ -23,10 +23,6 @@ class NewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
-        promo_textView.setOnClickListener{
-            val intent = Intent(this, PromoActivity::class.java)
-            startActivity(intent)
-        }
 
         toggle = ActionBarDrawerToggle(
             this,
@@ -51,7 +47,7 @@ class NewsActivity : AppCompatActivity() {
             }
             true
         }
-        
+
         val header: View = (findViewById<NavigationView>(R.id.Navigation)).getHeaderView(0)
         (header.findViewById(R.id.userName) as TextView).text = FirebaseAuth.getInstance().currentUser?.email
     }

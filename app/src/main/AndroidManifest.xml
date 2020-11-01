@@ -56,6 +56,7 @@
         <meta-data
             android:name="edu.bluejack20_1.gogames.TestMode"
             android:value="false" />
+        <receiver android:name=".ReminderBroadcast"/>
     </application>
 
 </manifest>

@@ -7,16 +7,17 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
 import edu.bluejack20_1.gogames.rawg.repository.GamesRepository
+import edu.bluejack20_1.gogames.rawg.repository.GenreRepository
 import edu.bluejack20_1.gogames.rawg.ui.games.GamesViewModel
 import edu.bluejack20_1.gogames.rawg.utils.MyViewModelFactory
 
 @Module
 class GameScreenViewModelModule (private val fragment: Fragment) {
     @Provides
-    fun provideViewModel(fragment: Fragment, gamesRepository: GamesRepository): GamesViewModel{
+    fun provideViewModel(fragment: Fragment, gamesRepository: GamesRepository, genreRepository: GenreRepository): GamesViewModel{
         return ViewModelProvider(fragment,
             MyViewModelFactory{
-                GamesViewModel(gamesRepository)
+                GamesViewModel(gamesRepository,genreRepository)
             }).get(GamesViewModel::class.java)
     }
 

@@ -1,11 +1,17 @@
 package edu.bluejack20_1.gogames
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.bluejack20_1.gogames.itad.api.ItadServiceApi
 import edu.bluejack20_1.gogames.itad.api.RetrofitClient
@@ -19,6 +25,8 @@ import kotlinx.android.synthetic.main.activity_promo.Navigation
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PromoActivity : AppCompatActivity() {
 
@@ -38,7 +46,6 @@ class PromoActivity : AppCompatActivity() {
                 response: Response<ItadResult>
             ) {
                 val responseCode = response.code().toString()
-                tvDealsCode.text = responseCode
                 response.body()?.let { list.addAll(it.data.list) }
                 val adapter = DealAdapter(list)
                 rvDeal.adapter = adapter
@@ -68,6 +75,25 @@ class PromoActivity : AppCompatActivity() {
             }
             true
         }
+
+        createNotificationChannel()
+
+        val intent = Intent(this, ReminderBroadcast::class.java)
+        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0 , intent, 0)
+
+        val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val calendar: Calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.HOUR_OF_DAY, 12)
+        }
+        alarmManager?.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
+//        alarmManager.set(AlarmManager.RTC_WAKEUP,
+//        System.currentTimeMillis() + 60000, pendingIntent)
     }
 
     fun moveToPromo() {
@@ -83,5 +109,19 @@ class PromoActivity : AppCompatActivity() {
     fun moveToNews() {
         val intent = Intent(this, NewsActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name : CharSequence  =  "PromoReminderChannel"
+            val description : String = "Channel for Promo Reminder"
+            val importance : Int = NotificationManager.IMPORTANCE_DEFAULT
+            val channel : NotificationChannel = NotificationChannel("notifyPromo", name, importance)
+            channel.description = description
+
+            val notificationManager : NotificationManager? = getSystemService(
+                NotificationManager::class.java)
+            notificationManager?.createNotificationChannel(channel)
+        }
     }
 }

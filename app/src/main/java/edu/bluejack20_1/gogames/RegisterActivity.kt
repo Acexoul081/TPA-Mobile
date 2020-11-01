@@ -9,29 +9,35 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Patterns
+import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
-
     private lateinit var mAuth : FirebaseAuth
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        mAuth = FirebaseAuth.getInstance()
+        database = Firebase.database.reference
 
-        register_button.setOnClickListener{
+        mAuth = FirebaseAuth.getInstance()
+        val btnLogin = findViewById<Button>(R.id.button_register)
+        btnLogin.setOnClickListener{
+            Log.d("RegisterActivity", "Try to show login")
            performRegister()
         }
 
         alreadyAccount_textView.setOnClickListener{
-            Log.d("RegisterActivity", "Try to show login")
 
             //launch the login activity somehow
             val intent = Intent(this, LoginActivity::class.java)
@@ -80,10 +86,15 @@ class RegisterActivity : AppCompatActivity() {
             email_editText.requestFocus()
             return
         }
-        //validate pass numeric
-//        if(pass.length < 6 && !pass.is){
-//
-//        }
+//        validate pass numeric
+        if(pass.length < 6){
+            Toast.makeText(this, "Password to short", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!pass.matches("[a-zA-Z0-9]+".toRegex())){
+            Toast.makeText(this, "Pass must be alphanumeric", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Log.d("MainActivity", "username : $username")
         Log.d("MainActivity", "email: $email")
@@ -92,10 +103,11 @@ class RegisterActivity : AppCompatActivity() {
         //Firebase auth
         mAuth.createUserWithEmailAndPassword(email,pass)
             .addOnCompleteListener{
-                if (!it.isSuccessful) return@addOnCompleteListener
+//                if (!it.isSuccessful) return@addOnCompleteListener
+
 
                 Log.d("RegisterActivity","Success created user with uid: ${it.result?.user?.uid}")
-//                uploadImageToFirebaseStorage()
+                uploadImageToFirebaseStorage()
                 val intent = Intent(this, NewsActivity::class.java)
                 startActivity(intent)
             }
@@ -116,7 +128,6 @@ class RegisterActivity : AppCompatActivity() {
 
                 ref.downloadUrl.addOnSuccessListener {it ->
                     Log.d("RegisterActivity", "File location: $it")
-
                     saveUserToDatabase(it.toString())
                 }
             }
@@ -124,9 +135,9 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun saveUserToDatabase(profileImageUrl: String){
         val uid = FirebaseAuth.getInstance().uid?: ""
-        val ref =FirebaseDatabase.getInstance().getReference("/users/$uid")
+
         val user = User(uid, username_editText.text.toString(), profileImageUrl)
-        ref.setValue(user)
+        database.child("Users").child(uid).setValue(user)
             .addOnSuccessListener {
                 Log.d("RegisterActivity", "save user to database")
             }

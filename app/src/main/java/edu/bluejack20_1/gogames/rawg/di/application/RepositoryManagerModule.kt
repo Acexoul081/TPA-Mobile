@@ -5,6 +5,7 @@ import dagger.Provides
 import edu.bluejack20_1.gogames.rawg.di.ApplicationScope
 import edu.bluejack20_1.gogames.rawg.repository.GameSingleRepository
 import edu.bluejack20_1.gogames.rawg.repository.GamesRepository
+import edu.bluejack20_1.gogames.rawg.repository.GenreRepository
 import edu.bluejack20_1.gogames.rawg.repository.RemoteSource
 
 @Module
@@ -13,6 +14,12 @@ class RepositoryManagerModule {
     @Provides
     fun provideGameRepository(remoteSource: RemoteSource): GamesRepository {
         return GamesRepository(remoteSource)
+    }
+
+    @ApplicationScope
+    @Provides
+    fun provideGenreRepository(remoteSource: RemoteSource): GenreRepository {
+        return GenreRepository(remoteSource)
     }
 
     @ApplicationScope
