@@ -1,5 +1,6 @@
 package edu.bluejack20_1.gogames.rawg.repository
 
+import android.util.Log
 import com.ekn.gruzer.rawg.entity.Game
 import com.ekn.gruzer.rawg.entity.GameSingle
 import com.ekn.gruzer.rawg.entity.Genre
@@ -8,7 +9,7 @@ import com.ekn.gruzer.rawg.network.RawgData
 import com.ekn.gruzer.rawg.network.RawgServiceApi
 
 class RemoteSource (private val service: RawgServiceApi){
-    suspend fun getGames(dates: String? = null, keyword: String? = null): RawgApiResult<RawgData<List<Game>>>{
+    suspend fun getGames(dates: String? = null, keyword: String? = null): RawgApiResult<RawgData<List<Game>>> {
         if (dates != null){
             return service.getListOfGames(dates = dates, ordering = "released")
         }
@@ -23,7 +24,9 @@ class RemoteSource (private val service: RawgServiceApi){
     }
 
     suspend fun getGenre() : RawgApiResult<RawgData<List<Genre>>>{
-        return service.getListOfGamesGenres()
+        val result = service.getListOfGamesGenres()
+        Log.d("genreInRepo", result.toString())
+        return result
     }
 
     suspend fun getGameByGenre(genre: String):RawgApiResult<RawgData<List<Game>>>{

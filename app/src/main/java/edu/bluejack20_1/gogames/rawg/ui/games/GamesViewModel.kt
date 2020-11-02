@@ -71,7 +71,6 @@ class GamesViewModel (private val repository: GamesRepository, private val genre
         delay(5000)
         val result = genreRepository.getGenres()
         withContext(Dispatchers.Main) {_viewState.value = GamesViewState.IsDoneLoading}
-        Log.d("genre", result.toString())
         handleGenderResult(result)
     }
 

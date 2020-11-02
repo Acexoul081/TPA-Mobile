@@ -1,5 +1,6 @@
 package edu.bluejack20_1.gogames.rawg.repository
 
+import android.util.Log
 import com.ekn.gruzer.rawg.entity.Genre
 import com.ekn.gruzer.rawg.network.RawgData
 
