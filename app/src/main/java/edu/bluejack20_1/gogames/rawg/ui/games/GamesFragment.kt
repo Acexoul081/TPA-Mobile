@@ -2,6 +2,7 @@ package edu.bluejack20_1.gogames.rawg.ui.games
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -16,7 +17,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekn.gruzer.rawg.entity.Game
 import com.ekn.gruzer.rawg.entity.Genre
+import com.google.firebase.auth.FirebaseAuth
 import edu.bluejack20_1.gogames.R
+import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import edu.bluejack20_1.gogames.rawg.RawgApplication
 import edu.bluejack20_1.gogames.rawg.di.gameview.GameScreenViewModelModule
 import kotlinx.android.synthetic.main.fragment_games.*
@@ -40,9 +43,9 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     private var searchView: SearchView? = null
     private var queryTextListener: SearchView.OnQueryTextListener? = null
     private lateinit var spinner: Spinner
+    private lateinit var sp : PreferencesConfig
     @Inject
     lateinit var viewModel: GamesViewModel
-
     private val gamesAdapter: GamesAdapter by lazy {
         GamesAdapter(this)
     }
@@ -50,6 +53,7 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        sp = PreferencesConfig(activity as Context)
     }
 
     override fun onCreateView(
@@ -79,7 +83,13 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
         }
 
         viewModel.viewState.observe(viewLifecycleOwner, Observer { render(it) })
-        viewModel.perform(GamesViewIntent.FetchFutureRelease)
+
+        if(FirebaseAuth.getInstance().currentUser != null && sp.getGenre()  != null){
+            viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = sp.getGenre() )
+        }else{
+            viewModel.perform(GamesViewIntent.FetchFutureRelease)
+        }
+
         viewModel.performGenre()
 
     }
@@ -93,7 +103,7 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     }
 
     private fun showError(error: String){
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("masalah", error)
     }
 
     private fun loadingInProgress() {
@@ -160,6 +170,10 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
             if(pos > 0){
                 viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = parent.getItemAtPosition(pos).toString())
                 Log.d("debug", parent.getItemAtPosition(pos).toString())
+                if(FirebaseAuth.getInstance().currentUser != null){
+                    sp.putGenre(parent.getItemAtPosition(pos).toString())
+                }
+
             }
 
         }else{
