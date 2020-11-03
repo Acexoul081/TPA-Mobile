@@ -100,7 +100,11 @@
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content"/>
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text|textMultiLine"
+                android:text="Description"/>
 
             <ProgressBar
                 android:id="@+id/progressbar"
@@ -110,16 +114,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <Button
-                android:id="@+id/button_save"
-                android:layout_marginTop="15dp"
-                android:textColor="@android:color/white"
-                android:background="?colorPrimary"
-                android:textAllCaps="false"
-                android:layout_gravity="center_horizontal"
-                android:text="Save Changes"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:id="@+id/button_save"
+                    android:textColor="@android:color/white"
+                    android:text="Save Changes"
+                    android:layout_height="match_parent"/>
+
+                <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:text="Share"/>
+
+                <Button
+                    android:id="@+id/updateProfile_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:text="Update Profile"/>
+            </LinearLayout>
+
 
         </LinearLayout>
 

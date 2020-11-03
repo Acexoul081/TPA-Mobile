@@ -88,6 +88,7 @@ class ProfileFragment : Fragment() {
                     }
                 }
         }
+
         text_not_verified.setOnClickListener{
             currentUser?.sendEmailVerification()
                 ?.addOnCompleteListener{
@@ -98,6 +99,15 @@ class ProfileFragment : Fragment() {
                     }
                 }
         }
+
+        updateProfile_btn.setOnClickListener{
+            openDialog()
+        }
+    }
+
+    private fun openDialog(){
+        val exampleDialog : ExampleDialog = ExampleDialog()
+        exampleDialog.show(activity!!.supportFragmentManager , "example dialog")
     }
 
     private fun takePictureIntent(){
