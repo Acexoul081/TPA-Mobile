@@ -4,12 +4,13 @@ import com.ekn.gruzer.rawg.network.RawgServiceApi
 import dagger.Module
 import dagger.Provides
 import edu.bluejack20_1.gogames.rawg.di.ApplicationScope
+import edu.bluejack20_1.gogames.rawg.repository.RawgApi
 
 @Module
 class NetworkSourceModule{
     @ApplicationScope
     @Provides
-    fun provideNetworkApi(): RawgServiceApi{
-        return RawgServiceApi.create()
+    fun provideNetworkApi(): RawgApi {
+        return RawgApi.create()
     }
 }

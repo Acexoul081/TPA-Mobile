@@ -8,13 +8,16 @@ import com.ekn.gruzer.rawg.network.RawgApiResult
 import com.ekn.gruzer.rawg.network.RawgData
 import com.ekn.gruzer.rawg.network.RawgServiceApi
 
-class RemoteSource (private val service: RawgServiceApi){
-    suspend fun getGames(dates: String? = null, keyword: String? = null): RawgApiResult<RawgData<List<Game>>> {
+class RemoteSource (private val service: RawgApi){
+    suspend fun getGames(dates: String? = null, keyword: String? = null, genre: String?= null): RawgApiResult<RawgData<List<Game>>>{
         if (dates != null){
             return service.getListOfGames(dates = dates, ordering = "released")
         }
         else if(keyword != null){
             return service.getListOfGames(search = keyword)
+        }
+        else if(genre != null){
+            return service.getListOfGames(genres = genre.decapitalize())
         }
         return service.getListOfGames()
     }
@@ -24,13 +27,8 @@ class RemoteSource (private val service: RawgServiceApi){
     }
 
     suspend fun getGenre() : RawgApiResult<RawgData<List<Genre>>>{
-        val result = service.getListOfGamesGenres()
-        Log.d("genreInRepo", result.toString())
-        return result
+        return service.getListOfGamesGenres()
     }
 
-    suspend fun getGameByGenre(genre: String):RawgApiResult<RawgData<List<Game>>>{
-        return service.getListOfGames(genres = genre)
-    }
 
 }

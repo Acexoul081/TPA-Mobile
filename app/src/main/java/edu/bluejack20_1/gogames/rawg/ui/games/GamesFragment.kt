@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.widget.SearchView
@@ -34,7 +35,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 
-class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister {
+class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, AdapterView.OnItemSelectedListener {
 
     private var searchView: SearchView? = null
     private var queryTextListener: SearchView.OnQueryTextListener? = null
@@ -111,7 +112,9 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister {
 
     private fun displayGenre(genres: List<Genre>?){
         val arrayList = ArrayList<String>(genres?.map { it.name })
+        arrayList.add(0, "Category")
         genre_spinner.adapter = ArrayAdapter<String>(activity as Context, R.layout.style_spinner, arrayList)
+        genre_spinner.onItemSelectedListener = this
     }
 
     override fun onRecycleViewItemSelected(item: Game) {
@@ -141,7 +144,7 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister {
                 }
 
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    viewModel.perform(GamesViewIntent.SearchGames, query)
+                    viewModel.perform(GamesViewIntent.SearchGames, keyword = query)
                     return true
                 }
             }
@@ -150,5 +153,21 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister {
         super.onCreateOptionsMenu(menu, inflater)
 
 
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        if (parent != null) {
+            if(pos > 0){
+                viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = parent.getItemAtPosition(pos).toString())
+                Log.d("debug", parent.getItemAtPosition(pos).toString())
+            }
+
+        }else{
+            Log.d("debug", "gagal ngga ketemu")
+        }
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
     }
 }

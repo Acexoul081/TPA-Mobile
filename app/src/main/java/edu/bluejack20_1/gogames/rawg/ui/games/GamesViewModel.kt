@@ -25,19 +25,20 @@ class GamesViewModel (private val repository: GamesRepository, private val genre
     val viewState: LiveData<GamesViewState>
         get() = _viewState
 
-    fun perform(intent: GamesViewIntent, keyword: String? = null) = when (intent){
+    fun perform(intent: GamesViewIntent, keyword: String? = null, genre: String? = null) = when (intent){
         is GamesViewIntent.FetchFutureRelease -> getGames(dates = getDates())
         is GamesViewIntent.SearchGames -> getGames(keyword = keyword)
+        is GamesViewIntent.FetchGamesByGenre -> getGames(genre = genre)
     }
 
     fun performGenre(){
         getGenres()
     }
 
-    private fun getGames(dates: String? = null, keyword: String? = null) {
+    private fun getGames(dates: String? = null, keyword: String? = null, genre: String? = null) {
         viewModelScope.launch (Dispatchers.Main )  {
             _viewState.value = GamesViewState.IsLoading
-            performRequest(dates = dates, keyword = keyword)
+            performRequest(dates = dates, keyword = keyword, genre = genre)
         }
     }
 
@@ -60,9 +61,9 @@ class GamesViewModel (private val repository: GamesRepository, private val genre
         is DataState.Success -> _viewState.postValue(GamesViewState.ShowGenre(result.data?.result))
     }
 
-    private suspend fun performRequest(dates: String? = null, keyword: String? = null) = withContext(Dispatchers.IO) {
+    private suspend fun performRequest(dates: String? = null, keyword: String? = null, genre: String? = null) = withContext(Dispatchers.IO) {
         delay(5000)
-        val result = repository.getGames(dates, keyword)
+        val result = repository.getGames(dates, keyword, genre)
         withContext(Dispatchers.Main) {_viewState.value = GamesViewState.IsDoneLoading}
         handleResult(result)
     }
@@ -71,6 +72,7 @@ class GamesViewModel (private val repository: GamesRepository, private val genre
         delay(5000)
         val result = genreRepository.getGenres()
         withContext(Dispatchers.Main) {_viewState.value = GamesViewState.IsDoneLoading}
+        Log.d("genre", result.toString())
         handleGenderResult(result)
     }
 

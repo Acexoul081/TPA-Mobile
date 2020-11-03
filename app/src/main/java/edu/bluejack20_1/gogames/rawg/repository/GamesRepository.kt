@@ -6,8 +6,8 @@ import com.ekn.gruzer.rawg.network.RawgApiResult
 import com.ekn.gruzer.rawg.network.RawgData
 
 class GamesRepository (private val remote: RemoteSource): Repository<RawgData<List<Game>>>(){
-    suspend fun getGames(dates: String? = null, keyword: String?=null): DataState<RawgData<List<Game>>>{
-        val result = remote.getGames(dates, keyword)
+    suspend fun getGames(dates: String? = null, keyword: String?=null, genre: String? = null): DataState<RawgData<List<Game>>>{
+        val result = remote.getGames(dates, keyword , genre)
         return handleResult(result)
     }
 
