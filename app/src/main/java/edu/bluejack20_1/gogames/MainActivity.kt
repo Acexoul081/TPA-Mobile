@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_community -> moveToCommunity()
                 R.id.nav_news -> moveToNews()
                 R.id.nav_promo -> moveToPromo()
+                R.id.profile -> moveToProfile()
             }
             true
         }
@@ -81,6 +82,15 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun moveToProfile() {
+        val fragment = ProfileFragment()
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.mainFragment, fragment)
+            addToBackStack(null)
+            commit()
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)){
             return true
@@ -89,8 +99,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun redirectToMainThread(id: String, title: String, desc: String, category: String){
-        val fragment = DeveloperThread(id, title, desc, category)
+    fun redirectToMainThread(id: String, title: String, desc: String, category: String, like: Number, dislike: Number, userID: String){
+        val fragment = DeveloperThread(id, title, desc, category, like, dislike, userID)
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.mainFragment, fragment)
             addToBackStack(null)

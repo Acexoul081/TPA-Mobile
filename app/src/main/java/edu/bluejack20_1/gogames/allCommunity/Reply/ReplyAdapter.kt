@@ -6,7 +6,6 @@ import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_1.gogames.MainActivity
 import edu.bluejack20_1.gogames.R
@@ -15,7 +14,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.fragment_edit_thread.view.*
 import kotlinx.android.synthetic.main.thread_reply.view.*
 
 class ReplyAdapter(private val replies: List<Reply>, private val category: String, private val threadId: String, var parentContext: Context) : RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder>() {

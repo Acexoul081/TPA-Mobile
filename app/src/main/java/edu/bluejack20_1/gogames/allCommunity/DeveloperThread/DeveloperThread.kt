@@ -53,15 +53,6 @@ class DeveloperThread(
 
         val pref = PreferencesConfig(context as Context)
 
-        pref.putUser("", "")
-
-        if(pref.getUserID() == ""){
-            Log.d("test", "Tidak ada")
-        }else{
-            Log.d("test", pref.getUserID()!!)
-        }
-
-
         if(pref.getUserID() == ""){
             BtnLike.visibility = View.INVISIBLE
             BtnDislike.visibility = View.INVISIBLE
@@ -69,7 +60,6 @@ class DeveloperThread(
             BtnReply.visibility = View.INVISIBLE
             DislikeCount.visibility = View.GONE
             LikeCount.visibility = View.GONE
-
         }
 
         if(pref.getUserID() == userID){
