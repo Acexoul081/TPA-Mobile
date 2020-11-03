@@ -14,8 +14,6 @@
             android:id="@+id/nav_community"
             android:title="@string/community"
             android:icon="@drawable/community"/>
-        <item android:id="@+id/nav_promo"
-            android:title="promo"/>
     </group>
     <group android:checkableBehavior="single">
 

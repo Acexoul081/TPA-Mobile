@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.FirebaseDatabase
 import edu.bluejack20_1.gogames.MainActivity
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.allCommunity.createThread.DataThread
@@ -32,7 +33,14 @@ class DeveloperThreadAdapter(private var DeveloperThreads: List<DataThread>, pri
 
             threadParent.setOnClickListener {
                 val activity: MainActivity = parentContext as MainActivity
-                activity.redirectToMainThread(DeveloperThreads[position].threadID, DeveloperThreads[position].title, DeveloperThreads[position].description, DeveloperThreads[position].category)
+
+
+                val ref = FirebaseDatabase.getInstance().reference.child("Thread").child(DeveloperThreads[position].category).child(DeveloperThreads[position].threadID).child("view")
+                var view = DeveloperThreads[position].view
+                view += 1
+                ref.setValue(view)
+
+                    activity.redirectToMainThread(DeveloperThreads[position].threadID, DeveloperThreads[position].title, DeveloperThreads[position].description, DeveloperThreads[position].category, DeveloperThreads[position].like, DeveloperThreads[position].dislike, DeveloperThreads[position].userID)
             }
         }
     }

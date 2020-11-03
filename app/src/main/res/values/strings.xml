@@ -24,5 +24,9 @@
         <item>Developer</item>
         <item>Game</item>
         <item>Other</item>
+    </string-array>    
+    <string-array name="sort_by">
+        <item>Newest</item>
+        <item>Most Discuss</item>
     </string-array>
 </resources>

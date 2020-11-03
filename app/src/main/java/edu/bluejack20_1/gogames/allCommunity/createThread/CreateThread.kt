@@ -43,7 +43,7 @@ class CreateThread : Fragment(R.layout.fragment_create_thread) {
         if(title != "" && description != ""){
             val reff: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Thread").child(category)
             val currDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().time)
-            var thread = DataThread(uuid.toString(), pref.getUserID()!!, pref.getUsername()!!, title, description, category, 0, 0, 0, currDate)
+            var thread = DataThread(uuid.toString(), pref.getUserID()!!, pref.getUsername()!!, title, description, category, 0, 0, 0, currDate, 0)
             reff.child(uuid.toString()).setValue(thread)
         }else{
             Toast.makeText(context as Context, "title or description must be filled !", Toast.LENGTH_LONG).show()
