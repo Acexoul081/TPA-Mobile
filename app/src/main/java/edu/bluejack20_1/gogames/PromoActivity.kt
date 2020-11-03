@@ -9,17 +9,12 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import edu.bluejack20_1.gogames.itad.api.ItadServiceApi
 import edu.bluejack20_1.gogames.itad.api.RetrofitClient
 import edu.bluejack20_1.gogames.itad.api.adapter.DealAdapter
 import edu.bluejack20_1.gogames.itad.api.entity.Deal
 import edu.bluejack20_1.gogames.itad.api.entity.ItadResult
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.activity_promo.*
 import kotlinx.android.synthetic.main.activity_promo.Navigation
 import retrofit2.Call
@@ -47,7 +42,7 @@ class PromoActivity : AppCompatActivity() {
             ) {
                 val responseCode = response.code().toString()
                 response.body()?.let { list.addAll(it.data.list) }
-                val adapter = DealAdapter(list)
+                val adapter = DealAdapter(list, getAct())
                 rvDeal.adapter = adapter
             }
 
@@ -86,14 +81,19 @@ class PromoActivity : AppCompatActivity() {
             timeInMillis = System.currentTimeMillis()
             set(Calendar.HOUR_OF_DAY, 12)
         }
-        alarmManager?.setInexactRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY,
-            pendingIntent
-        )
-//        alarmManager.set(AlarmManager.RTC_WAKEUP,
-//        System.currentTimeMillis() + 60000, pendingIntent)
+        alarmManager.set(AlarmManager.RTC_WAKEUP,
+        System.currentTimeMillis() + 60000, pendingIntent)
+//        alarmManager?.setInexactRepeating(
+//            AlarmManager.RTC_WAKEUP,
+//            calendar.timeInMillis,
+//            AlarmManager.INTERVAL_DAY,
+//            pendingIntent
+//        )
+
+    }
+
+    private fun getAct(): AppCompatActivity{
+        return this
     }
 
     fun moveToPromo() {
