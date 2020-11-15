@@ -25,4 +25,8 @@
         <item>Game</item>
         <item>Other</item>
     </string-array>
+    <string name="password">Password</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+    <string name="updateSocial">Update Social Account</string>
 </resources>

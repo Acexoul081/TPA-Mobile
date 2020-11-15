@@ -50,8 +50,9 @@ class NewsActivity : AppCompatActivity() {
 
         val header: View = (findViewById<NavigationView>(R.id.Navigation)).getHeaderView(0)
         (header.findViewById(R.id.userName) as TextView).text = FirebaseAuth.getInstance().currentUser?.email
-    }
 
+        Branch.sessionBuilder(this).withCallback(branchListener).withData(this.intent?.data).init()
+    }
 
     fun moveToPromo() {
         val intent = Intent(this, PromoActivity::class.java)
@@ -85,11 +86,20 @@ class NewsActivity : AppCompatActivity() {
 
         override fun onInitFinished(referringParams: JSONObject?, error: BranchError?) {
             if (error == null) {
-                Log.i("BRANCH SDK", referringParams.toString())
+                if (referringParams != null) {
+//                    Log.d("BRANCH SDK", referringParams.optString("game", ""))
+                    val gameID : String = referringParams.optString("gameID", "");
+                    if (gameID == "") {
+                        Log.d("Deeplink", "param ngga dapat")
+                    }
+                    else{
+                        Log.d("Deeplink", gameID)
+                    }
+                }
                 // Retrieve deeplink keys from 'referringParams' and evaluate the values to determine where to route the user
                 // Check '+clicked_branch_link' before deciding whether to use your Branch routing logic
             } else {
-                Log.e("BRANCH SDK", error.message)
+                Log.d("BRANCH SDK", error.message)
             }
         }
     }

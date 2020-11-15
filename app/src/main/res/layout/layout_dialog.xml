@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="16dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edit_username"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/pager_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Username" />
+        android:layout_height="?android:attr/actionBarSize"
+        app:tabMode="fixed"
+        app:tabGravity="fill">
 
-    <EditText
-        android:id="@+id/edit_password"
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:layout_below="@+id/edit_username"
-        android:layout_alignParentStart="true"
-        />
-    <Button
-        android:id="@+id/okUpdate_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OK"
-        android:layout_below="@id/edit_password"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:layout_below="@id/edit_password"
-        android:layout_toRightOf="@id/okUpdate_btn"/>
-</RelativeLayout>
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

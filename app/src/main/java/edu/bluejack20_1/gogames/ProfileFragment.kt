@@ -16,6 +16,9 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.storage.FirebaseStorage
+import edu.bluejack20_1.gogames.profile.ExampleDialog
+import edu.bluejack20_1.gogames.profile.UpdateProfileActivity
+import edu.bluejack20_1.gogames.profile.User
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.ByteArrayOutputStream
 
@@ -38,56 +41,60 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        currentUser?.let {user ->
-            Glide.with(this)
-                .load(currentUser.photoUrl)
-                .into(image_view)
-            edit_text_name.setText(user.displayName)
-            text_email.text = user.email
-            text_phone.text = if(user.phoneNumber.isNullOrEmpty()) "Add Number" else user.phoneNumber
+        val user = User.getInstance()
+        text_view_name.text = user.getUsername()
+        text_email.text = user.getEmail()
+        text_view_description.text = user.getDescription()
+        Glide.with(this)
+            .load(user.getImagePath())
+            .into(image_view)
 
-            if(user.isEmailVerified){
-                text_not_verified.visibility = View.VISIBLE
-            }else{
-                text_not_verified.visibility = View.INVISIBLE
-            }
+//            Glide.with(this)
+//                .load(currentUser.photoUrl)
+//                .into(image_view)
 
-        }
+//            if(user.isEmailVerified){
+//                text_not_verified.visibility = View.VISIBLE
+//            }else{
+//                text_not_verified.visibility = View.INVISIBLE
+//            }
+
+
 
         image_view.setOnClickListener{
             takePictureIntent()
         }
 
-        button_save.setOnClickListener{
-            val photo = when{
-                ::imageUri.isInitialized -> imageUri
-                currentUser?.photoUrl == null -> Uri.parse(DEFAULT_IMAGE_URL)
-                else -> currentUser.photoUrl
-            }
-            val name = edit_text_name.text.toString().trim()
-
-            if(name.isEmpty()){
-                edit_text_name.error = "name required"
-                edit_text_name.requestFocus()
-                return@setOnClickListener
-            }
-
-            val updates = UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
-                .setPhotoUri(photo)
-                .build()
-            progressbar.visibility = View.VISIBLE
-
-            currentUser?.updateProfile(updates)
-                ?.addOnCompleteListener{task ->
-                    progressbar.visibility = View.INVISIBLE
-                    if(task.isSuccessful){
-//                        Toast.makeText(context?, "Profile Updated")
-                    }else{
-                        Log.d("error update", task.exception?.message!!)
-                    }
-                }
-        }
+//        button_save.setOnClickListener{
+//            val photo = when{
+//                ::imageUri.isInitialized -> imageUri
+//                currentUser?.photoUrl == null -> Uri.parse(DEFAULT_IMAGE_URL)
+//                else -> currentUser.photoUrl
+//            }
+//            val name = edit_text_name.text.toString().trim()
+//
+//            if(name.isEmpty()){
+//                edit_text_name.error = "name required"
+//                edit_text_name.requestFocus()
+//                return@setOnClickListener
+//            }
+//
+//            val updates = UserProfileChangeRequest.Builder()
+//                .setDisplayName(name)
+//                .setPhotoUri(photo)
+//                .build()
+//            progressbar.visibility = View.VISIBLE
+//
+//            currentUser?.updateProfile(updates)
+//                ?.addOnCompleteListener{task ->
+//                    progressbar.visibility = View.INVISIBLE
+//                    if(task.isSuccessful){
+////                        Toast.makeText(context?, "Profile Updated")
+//                    }else{
+//                        Log.d("error update", task.exception?.message!!)
+//                    }
+//                }
+//        }
 
         text_not_verified.setOnClickListener{
             currentUser?.sendEmailVerification()
@@ -101,13 +108,8 @@ class ProfileFragment : Fragment() {
         }
 
         updateProfile_btn.setOnClickListener{
-            openDialog()
+            startActivity(Intent(this.context, UpdateProfileActivity::class.java))
         }
-    }
-
-    private fun openDialog(){
-        val exampleDialog : ExampleDialog = ExampleDialog()
-        exampleDialog.show(activity!!.supportFragmentManager , "example dialog")
     }
 
     private fun takePictureIntent(){
