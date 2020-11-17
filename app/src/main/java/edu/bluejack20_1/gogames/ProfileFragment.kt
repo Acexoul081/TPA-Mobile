@@ -22,6 +22,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack20_1.gogames.profile.ExampleDialog
+import edu.bluejack20_1.gogames.profile.Sosmed
 import edu.bluejack20_1.gogames.profile.UpdateProfileActivity
 import edu.bluejack20_1.gogames.profile.User
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -53,10 +54,14 @@ class ProfileFragment : Fragment() {
                     text_view_name.text = snapshot.child("username").value.toString()
                     text_email.text = snapshot.child("email").value.toString()
                     text_view_description.text = snapshot.child("description").value.toString()
+                    updateProfile_btn.visibility = View.INVISIBLE
                     activity?.let {
                         Glide.with(it)
                             .load(snapshot.child("imagePath").value.toString())
                             .into(image_view)
+                    }
+                    snapshot.child("socmed").children.forEach{
+                        generateSocMedButton(it.getValue(Sosmed :: class.java) as Sosmed)
                     }
                 }
 
@@ -74,36 +79,7 @@ class ProfileFragment : Fragment() {
                 .load(user.getImagePath())
                 .into(image_view)
             user.getSocmed().forEach{
-                val button = Button(activity as Context)
-                val drawable : Drawable
-                if(it.getType() == "Youtube"){
-                    drawable = resources.getDrawable(R.drawable.ic_youtube)
-                }
-                else if(it.getType() == "Steam"){
-                    Log.d("Lukas", "masuk")
-                    drawable = resources.getDrawable(R.drawable.ic_steam)
-                }
-                else if(it.getType() == "Facebook"){
-                    drawable = resources.getDrawable(R.drawable.ic_facebook)
-                }
-                else{
-                    drawable = resources.getDrawable(R.drawable.ic_mail)
-                }
-                button.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-                button.text = it.getLink()
-                button.layoutParams =
-                    ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT)
-                button.setOnClickListener{
-                    val uri : Uri
-                    if(!button.text.toString().startsWith("http://")){
-                        uri = Uri.parse("http://" + button.text.toString())
-                    }
-                    else{
-                        uri = Uri.parse(button.text.toString())
-                    }
-                    startActivity(Intent(Intent.ACTION_VIEW, uri))
-                }
-                layout_socmed.addView(button)
+                generateSocMedButton(it)
             }
 //            Glide.with(this)
 //                .load(currentUser.photoUrl)
@@ -176,6 +152,38 @@ class ProfileFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun generateSocMedButton(it : Sosmed){
+        val button = Button(activity as Context)
+        val drawable : Drawable
+        if(it.getType() == "Youtube"){
+            drawable = resources.getDrawable(R.drawable.ic_youtube)
+        }
+        else if(it.getType() == "Steam"){
+            drawable = resources.getDrawable(R.drawable.ic_steam)
+        }
+        else if(it.getType() == "Facebook"){
+            drawable = resources.getDrawable(R.drawable.ic_facebook)
+        }
+        else{
+            drawable = resources.getDrawable(R.drawable.ic_mail)
+        }
+        button.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+        button.text = it.getLink()
+        button.layoutParams =
+            ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT)
+        button.setOnClickListener{
+            val uri : Uri
+            if(!button.text.toString().startsWith("http://")){
+                uri = Uri.parse("http://" + button.text.toString())
+            }
+            else{
+                uri = Uri.parse(button.text.toString())
+            }
+            startActivity(Intent(Intent.ACTION_VIEW, uri))
+        }
+        layout_socmed.addView(button)
     }
 
     private fun takePictureIntent(){
