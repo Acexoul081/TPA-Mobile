@@ -170,8 +170,14 @@ class GameDetailFragment : Fragment() {
             Log.d("deepLink", it.description)
             details_description_txt.text = Html.fromHtml(it.description)
             details_game_title_txt.text = it.name
+            metacritic_textview.text = "Metacritic : "+ it.metacritic.toString()
+            added_textview.text = "Released : "+ it.released
+
             if(it.backgroundImageURL!=null){
                 LoadImage(details_image, it.backgroundImageURL)
+            }
+            else if (it.backgroundImageAdditionalURL!=null){
+                LoadImage(details_image, it.backgroundImageAdditionalURL)
             }
 
         }
