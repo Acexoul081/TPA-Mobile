@@ -45,10 +45,13 @@ class LoginActivity : AppCompatActivity(){
         login_button.setOnClickListener{
             val email = email_editText.text.toString()
             val password = password_editText.text.toString()
-
+            progressbar_login.visibility = View.VISIBLE
+            email_editText.isEnabled = false
+            password_editText.isEnabled = false
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this){
                     if(it.isSuccessful){
+                        progressbar_login.visibility = View.INVISIBLE
                         val db : DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")
                         val pref = PreferencesConfig(this)
                         val uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -86,6 +89,9 @@ class LoginActivity : AppCompatActivity(){
                     }else{
                         it.exception?.message?.let{
                             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                            progressbar_login.visibility = View.INVISIBLE
+                            email_editText.isEnabled = true
+                            password_editText.isEnabled = true
                         }
                     }
                 }

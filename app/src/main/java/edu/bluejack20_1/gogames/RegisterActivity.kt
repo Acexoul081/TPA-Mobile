@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -32,9 +33,8 @@ class RegisterActivity : AppCompatActivity() {
         database = Firebase.database.reference
 
         mAuth = FirebaseAuth.getInstance()
-        val btnLogin = findViewById<Button>(R.id.button_register)
-        btnLogin.setOnClickListener{
-            Log.d("RegisterActivity", "Try to show login")
+        val btnRegister = findViewById<Button>(R.id.button_register)
+        btnRegister.setOnClickListener{
            performRegister()
         }
 
@@ -101,16 +101,24 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this, "Username cannot contain special characters", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        progressbar_register.visibility = View.VISIBLE
+        username_editText.isEnabled = false
+        email_editText.isEnabled = false
+        password_editText.isEnabled = false
         //Firebase auth
         mAuth.createUserWithEmailAndPassword(email,pass)
             .addOnCompleteListener{
+                progressbar_register.visibility = View.INVISIBLE
                 Log.d("RegisterActivity","Success created user with uid: ${it.result?.user?.uid}")
                 uploadImageToFirebaseStorage()
                 val intent = Intent(this, NewsActivity::class.java)
                 startActivity(intent)
             }
             .addOnFailureListener{
+                progressbar_register.visibility = View.INVISIBLE
+                username_editText.isEnabled = true
+                email_editText.isEnabled = true
+                password_editText.isEnabled = true
                 Log.d("RegisterActivity", "Failed create user: ${it.message}")
                 Toast.makeText(this,"Failed create user: ${it.message}", Toast.LENGTH_SHORT).show()
             }

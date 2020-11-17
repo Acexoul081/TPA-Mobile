@@ -11,15 +11,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.ReminderBroadcast
 import edu.bluejack20_1.gogames.itad.api.entity.Deal
-import edu.bluejack20_1.gogames.itad.api.entity.ItadResult
 import kotlinx.android.synthetic.main.itemview_promos_rv.view.*
-import retrofit2.Callback
-import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -37,36 +35,51 @@ class DealAdapter(private val list: ArrayList<Deal>, private val activity: AppCo
                     val date = (deal.expiry as Double *1000)
                     val lon = date.toLong()
                     dayleft_textview.text = convertDate(lon)
-                }
+                    //button function
+                    notify_button.setOnClickListener{
+                        Log.d("notif", "masuk not")
+                        val time = dayleft_textview.text.toString().split("-").map { it.toInt() }
 
-                //button function
-                notify_button.setOnClickListener{
-                    Log.d("notif", "masuk not")
+                        val calendar = Calendar.getInstance()
+                        calendar.set(Calendar.DAY_OF_MONTH, time[0])
+                        calendar.set(Calendar.MONTH, time[1])
+                        calendar.set(Calendar.HOUR_OF_DAY, 12)
+                        calendar.set(Calendar.SECOND, 0)
 
-                    createNotificationChannel()
+                        createNotificationChannel()
 
-                    val intent = Intent(context, ReminderBroadcast::class.java)
-                    val pendingIntent : PendingIntent = PendingIntent.getBroadcast(context, 0 , intent, 0)
+                        val intent = Intent(context, ReminderBroadcast::class.java)
+                        intent.putExtra("message", promo_game_title.text.toString() + " will expired in 3 days. Come get your game")
+                        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(context, calendar.timeInMillis.toInt() , intent, 0)
 
-                    val alarmManager : AlarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    val calendar: Calendar = Calendar.getInstance().apply {
-                        timeInMillis = System.currentTimeMillis()
-                        set(Calendar.HOUR_OF_DAY, 12)
+
+                        val alarmManager : AlarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+                        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                            calendar.timeInMillis, pendingIntent)
+                        setCancelButton(pendingIntent, alarmManager, cancelNotify_button)
                     }
-                    alarmManager.set(AlarmManager.RTC_WAKEUP,
-                        System.currentTimeMillis() + 20000, pendingIntent)
                 }
-                cancelNotify_button.setOnClickListener{
-                    Log.d("notif", "masuk can")
-                    val intent = Intent(context, ReminderBroadcast::class.java)
-                    val alarmManager : AlarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    val pendingIntent : PendingIntent = PendingIntent.getBroadcast(context, 1 , intent, 0)
+                else{
+                    notify_button.visibility = View.INVISIBLE
+                    cancelNotify_button.visibility = View.INVISIBLE
+                }
 
-                    alarmManager.cancel(pendingIntent)
-                }
+
+
 
 
             }
+        }
+    }
+
+    private fun setCancelButton(
+        pendingIntent: PendingIntent,
+        alarmManager: AlarmManager,
+        cancelNotify_button: Button
+    ) {
+        cancelNotify_button.setOnClickListener{
+            alarmManager.cancel(pendingIntent)
         }
     }
 

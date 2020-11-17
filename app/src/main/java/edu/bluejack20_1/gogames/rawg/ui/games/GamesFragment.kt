@@ -2,6 +2,7 @@ package edu.bluejack20_1.gogames.rawg.ui.games
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -13,16 +14,23 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavDirections
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekn.gruzer.rawg.entity.Game
 import com.ekn.gruzer.rawg.entity.Genre
 import com.google.firebase.auth.FirebaseAuth
+import edu.bluejack20_1.gogames.MainActivity
+import edu.bluejack20_1.gogames.NewsActivity
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
+import edu.bluejack20_1.gogames.globalClass.WebParam
 import edu.bluejack20_1.gogames.rawg.RawgApplication
 import edu.bluejack20_1.gogames.rawg.di.gameview.GameScreenViewModelModule
+import io.branch.referral.Branch
+import io.branch.referral.BranchError
 import kotlinx.android.synthetic.main.fragment_games.*
+import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -65,7 +73,6 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     }
 
     override fun onAttach(context: Context) {
-
         super.onAttach(context)
         context?.let {
             (it.applicationContext as RawgApplication).appComponent.provideGameScreenComponent(
@@ -77,21 +84,20 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         main_games_rv.apply {
             layoutManager = LinearLayoutManager(this@GamesFragment.context)
             adapter = gamesAdapter
-        }
+    }
 
         viewModel.viewState.observe(viewLifecycleOwner, Observer { render(it) })
 
         if(FirebaseAuth.getInstance().currentUser != null && sp.getGenre()  != null){
-            viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = sp.getGenre() )
+            viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = sp.getGenre())
         }else{
             viewModel.perform(GamesViewIntent.FetchFutureRelease)
         }
-
         viewModel.performGenre()
-
     }
 
     private fun render(viewState: GamesViewState) = when (viewState) {
@@ -115,9 +121,21 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     }
 
     private fun displayGames(games: List<Game>?) {
-        games?.let {
-            gamesAdapter.updateList(it)
+        val param = WebParam.getInstance()
+        if(param.getGameID() != ""){
+            val direction: NavDirections =
+                GamesFragmentDirections.actionGamesFragmentToGameDetailFragment(
+                    param.getGameID(),
+                    "",
+                    ""
+                )
+            findNavController().navigate(direction)
+        }else{
+            games?.let {
+                gamesAdapter.updateList(it)
+            }
         }
+
     }
 
     private fun displayGenre(genres: List<Genre>?){
@@ -125,6 +143,11 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
         arrayList.add(0, "Category")
         genre_spinner.adapter = ArrayAdapter<String>(activity as Context, R.layout.style_spinner, arrayList)
         genre_spinner.onItemSelectedListener = this
+        arrayList.forEachIndexed{ index, element ->
+            if(element == sp.getGenre()){
+                genre_spinner.setSelection(index-1)
+            }
+        }
     }
 
     override fun onRecycleViewItemSelected(item: Game) {
@@ -182,6 +205,6 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
-        TODO("Not yet implemented")
+
     }
 }

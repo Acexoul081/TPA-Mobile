@@ -71,18 +71,16 @@ class PromoActivity : AppCompatActivity() {
             true
         }
 
-        createNotificationChannel()
-
-        val intent = Intent(this, ReminderBroadcast::class.java)
-        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0 , intent, 0)
-
-        val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, 12)
-        }
-        alarmManager.set(AlarmManager.RTC_WAKEUP,
-        System.currentTimeMillis() + 60000, pendingIntent)
+//        val intent = Intent(this, ReminderBroadcast::class.java)
+//        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0 , intent, 0)
+//
+//        val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+//        val calendar: Calendar = Calendar.getInstance().apply {
+//            timeInMillis = System.currentTimeMillis()
+//            set(Calendar.HOUR_OF_DAY, 12)
+//        }
+//        alarmManager.set(AlarmManager.RTC_WAKEUP,
+//        System.currentTimeMillis() + 60000, pendingIntent)
 //        alarmManager?.setInexactRepeating(
 //            AlarmManager.RTC_WAKEUP,
 //            calendar.timeInMillis,
@@ -109,19 +107,5 @@ class PromoActivity : AppCompatActivity() {
     fun moveToNews() {
         val intent = Intent(this, NewsActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun createNotificationChannel(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val name : CharSequence  =  "PromoReminderChannel"
-            val description : String = "Channel for Promo Reminder"
-            val importance : Int = NotificationManager.IMPORTANCE_DEFAULT
-            val channel : NotificationChannel = NotificationChannel("notifyPromo", name, importance)
-            channel.description = description
-
-            val notificationManager : NotificationManager? = getSystemService(
-                NotificationManager::class.java)
-            notificationManager?.createNotificationChannel(channel)
-        }
     }
 }

@@ -23,6 +23,7 @@ class RemoteSource (private val service: RawgApi){
     }
 
     suspend fun fetchGameDetails(id: String): RawgApiResult<GameSingle>{
+        Log.d("inDebug", service.getDetailsOfGame(id = id).toString())
         return service.getDetailsOfGame(id = id)
     }
 

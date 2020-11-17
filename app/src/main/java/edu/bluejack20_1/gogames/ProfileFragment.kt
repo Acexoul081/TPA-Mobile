@@ -1,8 +1,11 @@
 package edu.bluejack20_1.gogames
 
+import android.app.ActionBar
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -11,10 +14,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack20_1.gogames.profile.ExampleDialog
 import edu.bluejack20_1.gogames.profile.UpdateProfileActivity
@@ -28,6 +33,7 @@ class ProfileFragment : Fragment() {
     private lateinit var imageUri : Uri
     private val REQUEST_IMAGE_CAPTURE = 100
     private val DEFAULT_IMAGE_URL = "https://picsum.photos/200"
+    private lateinit var database : DatabaseReference
 
     private val currentUser = FirebaseAuth.getInstance().currentUser
     override fun onCreateView(
@@ -40,15 +46,65 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(arguments?.getString("userID") != null){
+            database = FirebaseDatabase.getInstance().reference.child("Users").child(requireArguments().getString("userID")!!)
+            database.addValueEventListener(object  : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    text_view_name.text = snapshot.child("username").value.toString()
+                    text_email.text = snapshot.child("email").value.toString()
+                    text_view_description.text = snapshot.child("description").value.toString()
+                    activity?.let {
+                        Glide.with(it)
+                            .load(snapshot.child("imagePath").value.toString())
+                            .into(image_view)
+                    }
+                }
 
-        val user = User.getInstance()
-        text_view_name.text = user.getUsername()
-        text_email.text = user.getEmail()
-        text_view_description.text = user.getDescription()
-        Glide.with(this)
-            .load(user.getImagePath())
-            .into(image_view)
+                override fun onCancelled(error: DatabaseError) {
+                }
 
+            })
+        }
+        else{
+            val user = User.getInstance()
+            text_view_name.text = user.getUsername()
+            text_email.text = user.getEmail()
+            text_view_description.text = user.getDescription()
+            Glide.with(this)
+                .load(user.getImagePath())
+                .into(image_view)
+            user.getSocmed().forEach{
+                val button = Button(activity as Context)
+                val drawable : Drawable
+                if(it.getType() == "Youtube"){
+                    drawable = resources.getDrawable(R.drawable.ic_youtube)
+                }
+                else if(it.getType() == "Steam"){
+                    Log.d("Lukas", "masuk")
+                    drawable = resources.getDrawable(R.drawable.ic_steam)
+                }
+                else if(it.getType() == "Facebook"){
+                    drawable = resources.getDrawable(R.drawable.ic_facebook)
+                }
+                else{
+                    drawable = resources.getDrawable(R.drawable.ic_mail)
+                }
+                button.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+                button.text = it.getLink()
+                button.layoutParams =
+                    ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT)
+                button.setOnClickListener{
+                    val uri : Uri
+                    if(!button.text.toString().startsWith("http://")){
+                        uri = Uri.parse("http://" + button.text.toString())
+                    }
+                    else{
+                        uri = Uri.parse(button.text.toString())
+                    }
+                    startActivity(Intent(Intent.ACTION_VIEW, uri))
+                }
+                layout_socmed.addView(button)
+            }
 //            Glide.with(this)
 //                .load(currentUser.photoUrl)
 //                .into(image_view)
@@ -61,9 +117,9 @@ class ProfileFragment : Fragment() {
 
 
 
-        image_view.setOnClickListener{
-            takePictureIntent()
-        }
+            image_view.setOnClickListener{
+                takePictureIntent()
+            }
 
 //        button_save.setOnClickListener{
 //            val photo = when{
@@ -96,20 +152,30 @@ class ProfileFragment : Fragment() {
 //                }
 //        }
 
-        text_not_verified.setOnClickListener{
-            currentUser?.sendEmailVerification()
-                ?.addOnCompleteListener{
-                    if (it.isSuccessful){
-                        //toast email sent
-                    }else{
-                        //toast exception
+            text_not_verified.setOnClickListener{
+                currentUser?.sendEmailVerification()
+                    ?.addOnCompleteListener{
+                        if (it.isSuccessful){
+                            //toast email sent
+                        }else{
+                            //toast exception
+                        }
                     }
-                }
+            }
+
+            updateProfile_btn.setOnClickListener{
+                startActivity(Intent(this.context, UpdateProfileActivity::class.java))
+            }
+            btn_share.setOnClickListener{
+                val message = "70960.app.link/?userID=" + user.getUid()
+                val intent = Intent()
+                intent.action = Intent.ACTION_SEND
+                intent.putExtra(Intent.EXTRA_TEXT, message)
+                intent.type = "text/plain"
+                startActivity(Intent.createChooser(intent, "Share to : "))
+            }
         }
 
-        updateProfile_btn.setOnClickListener{
-            startActivity(Intent(this.context, UpdateProfileActivity::class.java))
-        }
     }
 
     private fun takePictureIntent(){

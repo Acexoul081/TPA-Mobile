@@ -201,7 +201,7 @@ interface RawgApi {
      * Get details of the game.
      * @return @[GameSingle]
      */
-    @GET("/api/games/{id}")
+    @GET("/api/games/{id}?key=a4697a380bd94ab4bfe58d2dbb8bc3a1")
     suspend fun getDetailsOfGame(
         @Path("id") id: String
     ): RawgApiResult<GameSingle>

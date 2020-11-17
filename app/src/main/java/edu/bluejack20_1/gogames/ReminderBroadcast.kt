@@ -10,18 +10,20 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import java.util.*
 
 class ReminderBroadcast : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
+        val message = intent?.getSerializableExtra("message")
         val builder : NotificationCompat.Builder = NotificationCompat.Builder(context!!, "notifyPromo")
             .setSmallIcon(R.drawable.ic_mail)
             .setContentTitle("Promo Notification")
-            .setContentText("Check out your new game promo")
+            .setContentText(message.toString())
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notificationManager : NotificationManagerCompat = NotificationManagerCompat.from(context)
 
-        notificationManager.notify(200, builder.build())
+        notificationManager.notify(Calendar.getInstance().timeInMillis.toInt(), builder.build())
     }
 
 
