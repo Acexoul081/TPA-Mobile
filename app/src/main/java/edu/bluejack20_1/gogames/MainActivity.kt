@@ -26,7 +26,6 @@ import java.lang.Exception
 class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
-
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,17 +34,26 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        tembakUser()
+        if(intent.extras != null){
+            val bundle = intent.extras
+            val fragment = ProfileFragment()
+            fragment.arguments = bundle
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.mainFragment, fragment)
+                addToBackStack(null)
+                commit()
+            }
+        }else{
+            val homeFragment = HomeFragment()
+            val homeCommunity = CommunityHome()
 
-        val homeFragment = HomeFragment()
-        val homeCommunity = CommunityHome()
-
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.mainFragment, homeFragment)
-            addToBackStack(null)
-            commit()
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.mainFragment, homeFragment)
+                addToBackStack(null)
+                commit()
+            }
         }
-
+//        tembakUser()
         toggle = ActionBarDrawerToggle(this, drawer_layout, open_navigation, close_navigation)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -108,35 +116,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkUser(){
-        if(auth.currentUser != null){
-            Toast.makeText(this, "User Log in", Toast.LENGTH_LONG).show()
-        }
-    }
+//    private fun checkUser(){
+//        if(auth.currentUser != null){
+//            Toast.makeText(this, "User Log in", Toast.LENGTH_LONG).show()
+//        }
+//    }
 
 
-    //login
-    private fun tembakUser(){
-        val email = "test@gmail.com"
-        val password = "pass123"
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                auth.signInWithEmailAndPassword(email, password).await()
-                withContext(Dispatchers.Main) {
-                    checkUser()
-                    val uid = auth.currentUser?.uid
-                    val username = "dummy"
-                    userName.text = username
-                    if (uid != null) {
-                        sharedPreferences(uid, username)
-                    }
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main){}
-                Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
+//    //login
+//    private fun tembakUser(){
+//        val email = "test@gmail.com"
+//        val password = "pass123"
+//        CoroutineScope(Dispatchers.IO).launch {
+//            try {
+//                auth.signInWithEmailAndPassword(email, password).await()
+//                withContext(Dispatchers.Main) {
+//                    checkUser()
+//                    val uid = auth.currentUser?.uid
+//                    val username = "dummy"
+//                    userName.text = username
+//                    if (uid != null) {
+//                        sharedPreferences(uid, username)
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                withContext(Dispatchers.Main){}
+//                Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
+//            }
+//        }
+//    }
 
     private fun sharedPreferences(uid: String, username: String){
         val sharePref = PreferencesConfig(this)

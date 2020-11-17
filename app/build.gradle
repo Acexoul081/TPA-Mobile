@@ -47,7 +47,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
     implementation "androidx.recyclerview:recyclerview:1.1.0"
-    implementation 'com.google.firebase:firebase-database:19.5.0'
+    implementation 'com.google.firebase:firebase-database:19.5.1'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
     implementation 'com.google.firebase:firebase-auth:19.4.0'
@@ -67,8 +67,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx:19.2.0'
-    implementation 'com.google.firebase:firebase-database-ktx:19.5.0'
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    implementation 'com.google.firebase:firebase-database-ktx:19.5.1'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
     implementation 'com.ekn.gruzer.rawg:rawgapiwrapper:0.1.0'
 
@@ -126,5 +126,8 @@ dependencies {
 
     implementation 'io.branch.sdk.android:library:5.+'
 
-}
+    //viewpager
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation "com.android.support:design:27.1.1"
 
+}

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,8 +20,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
+import edu.bluejack20_1.gogames.profile.Sosmed
+import edu.bluejack20_1.gogames.profile.User
 import kotlinx.android.synthetic.main.activiy_login.*
 
 class LoginActivity : AppCompatActivity(){
@@ -30,23 +35,49 @@ class LoginActivity : AppCompatActivity(){
     val RC_SIGN_IN: Int = 1
     lateinit var signOut: Button
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activiy_login)
+        database = Firebase.database.reference
         auth = Firebase.auth
         login_button.setOnClickListener{
             val email = email_editText.text.toString()
             val password = password_editText.text.toString()
-
-            Log.d("loginActivity", "login with $email $password")
-
+            progressbar_login.visibility = View.VISIBLE
+            email_editText.isEnabled = false
+            password_editText.isEnabled = false
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this){
                     if(it.isSuccessful){
+                        progressbar_login.visibility = View.INVISIBLE
+                        val db : DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")
                         val pref = PreferencesConfig(this)
                         val uid = FirebaseAuth.getInstance().currentUser?.uid
                         val email = FirebaseAuth.getInstance().currentUser?.email
+                        db.child(uid.toString()).addValueEventListener(object : ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if(snapshot.exists()){
+                                    User.getInstance().setUsername(snapshot.child("username").value.toString())
+                                    User.getInstance().setEmail(snapshot.child("email").value.toString())
+                                    User.getInstance().setPassword(snapshot.child("password").value.toString())
+                                    User.getInstance().setDescription(snapshot.child("description").value.toString())
+                                    User.getInstance().setImagePath(snapshot.child("imagePath").value.toString())
+                                    User.getInstance().setUid(uid.toString())
+                                    val listSosmed : MutableList<Sosmed> = mutableListOf<Sosmed>()
+                                    snapshot.child("socmed").children.forEach{snap->
+                                        listSosmed.add(snap.getValue(Sosmed :: class.java) as Sosmed)
+                                    }
+                                    User.getInstance().setSocmed(listSosmed)
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+
+                            }
+
+                        })
 
                         if (uid != null) {
                             if (email != null) {
@@ -58,6 +89,9 @@ class LoginActivity : AppCompatActivity(){
                     }else{
                         it.exception?.message?.let{
                             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                            progressbar_login.visibility = View.INVISIBLE
+                            email_editText.isEnabled = true
+                            password_editText.isEnabled = true
                         }
                     }
                 }
@@ -121,8 +155,8 @@ class LoginActivity : AppCompatActivity(){
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("success", "signInWithCredential:success")
                     val user = auth.currentUser
+                    saveGoogleUserToDatabase(user)
                     updateUI(user)
                     val intent = Intent(this, NewsActivity::class.java)
                     startActivity(intent)
@@ -132,6 +166,41 @@ class LoginActivity : AppCompatActivity(){
                     // ...
                 }
             }
+    }
+
+    private fun saveGoogleUserToDatabase(user: FirebaseUser?){
+
+        database = FirebaseDatabase.getInstance().reference.child("Users").child(user?.uid.toString())
+        database.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    User.getInstance().setUsername(snapshot.child("username").value.toString())
+                    User.getInstance().setEmail(snapshot.child("email").value.toString())
+                    User.getInstance().setPassword(snapshot.child("password").value.toString())
+                    User.getInstance().setDescription(snapshot.child("description").value.toString())
+                    User.getInstance().setImagePath(snapshot.child("imagePath").value.toString())
+                    User.getInstance().setUid(snapshot.child("uid").value.toString())
+                    val listSosmed : MutableList<Sosmed> = mutableListOf<Sosmed>()
+                    snapshot.child("socmed").children.forEach{
+                        listSosmed.add(it.getValue(Sosmed :: class.java) as Sosmed)
+                    }
+                    User.getInstance().setSocmed(listSosmed)
+                }
+                else{
+                    val temp = User.getInstance()
+                    temp.setUsername(user?.displayName.toString())
+                    temp.setImagePath(user?.photoUrl.toString())
+                    temp.setEmail(user?.email.toString())
+                    temp.setUid(user?.uid.toString())
+                    database.setValue(temp)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
 }

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">GoGames</string>
-    <string name="page_title">TPA Mobile</string>
+    <string name="app_name" translatable="false">GoGames</string>
+    <string name="page_title" translatable="false">TPA Mobile</string>
     <string name="favorite">help</string>
     <string name="content_description_favorite">Notification</string>
     <string name="search">search</string>
@@ -18,7 +18,7 @@
     <string name="open_navigation">Open navigation drawer</string>
     <string name="close_navigation">Close navigation drawer</string>
     <string name="navigation">navigation</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="fab_content_desc">addThread</string>
     <string-array name="category">
         <item>Developer</item>
@@ -29,4 +29,43 @@
         <item>Newest</item>
         <item>Most Discuss</item>
     </string-array>
+    <string name="password">Password</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+    <string name="updateSocial">Update Social Account</string>
+    <string name="share">Share</string>
+    <string name="unknownEx">Unknown Expiry</string>
+    <string name="notify">Notify Me</string>
+    <string name="cancel">Cancel</string>
+    <string name="title">Title</string>
+    <string name="old_price">Old Price</string>
+    <string name="new_price">New Price</string>
+    <string name="price_cut">Price Cut</string>
+    <string name="select_photo">Select Photo</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="register">Register</string>
+    <string name="already_register">Already have an account?</string>
+    <string name="skip">SKIP</string>
+    <string name="back_to_registration">Back To Registration</string>
+    <string name="sign_out">SIGN OUT</string>
+    <string name="create_thread">CREATE THREAD</string>
+    <string name="title_doubleDot">Title :</string>
+    <string name="description_doubleDota">Description :</string>
+    <string name="category_doubeDot">Category :</string>
+    <string name="submit">Submit</string>
+    <string name="edit_thread">EDIT THREAD</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="category">Category</string>
+    <string name="developers">Developers</string>
+    <string name="games">Games</string>
+    <string name="others">Others</string>
+    <string name="hot_threads">Hot Threads</string>
+    <string name="top_1">Top 1</string>
+    <string name="top_2">Top 2</string>
+    <string name="top_3">Top 3</string>
+    <string name="top_4">Top 4</string>
+    <string name="top_5">Top 5</string>
+    <string name="like">Like</string>
+    <string name="dislike">Dislike</string>
+
 </resources>

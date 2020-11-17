@@ -9,7 +9,7 @@
         android:id="@+id/hotTread"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hot Threads"
+        android:text="@string/hot_threads"
         android:textAlignment="center"
         android:layout_marginTop="10dp"
         android:textSize="25sp"
@@ -42,7 +42,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:backgroundTint="@color/electricBlue"
-        android:text="Top 1"
+        android:text="@string/top_1"
         android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@id/separator"/>
 
@@ -57,7 +57,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:backgroundTint="@color/electricBlue"
-        android:text="Top 2"
+        android:text="@string/top_2"
         android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@id/top1"/>
     <com.google.android.material.button.MaterialButton
@@ -71,7 +71,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:backgroundTint="@color/electricBlue"
-        android:text="Top 3"
+        android:text="@string/top_3"
         android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@id/top2"/>
     <com.google.android.material.button.MaterialButton
@@ -85,7 +85,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:backgroundTint="@color/electricBlue"
-        android:text="Top 4"
+        android:text="@string/top_4"
         android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@id/top3"/>
     <com.google.android.material.button.MaterialButton
@@ -99,7 +99,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:backgroundTint="@color/electricBlue"
-        android:text="Top 5"
+        android:text="@string/top_5"
         android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@id/top4"/>
 

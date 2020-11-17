@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="@string/title"
             android:layout_marginLeft="10dp"/>
         <View
             android:layout_width="0dp"
@@ -26,18 +26,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Old Price"
+            android:text="@string/old_price"
             android:layout_marginRight="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Price"
+            android:text="@string/new_price"
             android:layout_marginRight="10dp"/>
         <TextView
             android:id="@+id/constraintForRecycler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price cut"
+            android:text="@string/price_cut"
             android:layout_marginRight="10dp"/>
     </LinearLayout>
 

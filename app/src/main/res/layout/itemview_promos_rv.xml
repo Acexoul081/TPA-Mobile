@@ -59,12 +59,14 @@
                 android:id="@+id/notify_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notify me"/>
+                android:layout_marginHorizontal="10dp"
+                android:text="@string/notify"/>
             <Button
                 android:id="@+id/cancelNotify_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"/>
+                android:paddingHorizontal="10dp"
+                android:text="@string/cancel"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -74,7 +76,8 @@
                 android:id="@+id/dayleft_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="19 Days Left"/>
+                android:padding="5dp"
+                android:text="@string/unknownEx"/>
         </LinearLayout>
 
 

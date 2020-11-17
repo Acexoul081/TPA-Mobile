@@ -79,7 +79,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="50dp"
             android:layout_height="35dp"
-            android:text="Like"
+            android:text="@string/like"
             android:textColor="#FFD300"
             app:layout_constraintEnd_toStartOf="@id/LikeCount"
             app:layout_constraintTop_toBottomOf="@id/description"/>
@@ -100,7 +100,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="74dp"
             android:layout_height="35dp"
-            android:text="Dislike"
+            android:text="@string/dislike"
             android:textColor="#FFD300"
             app:layout_constraintRight_toLeftOf="@+id/DislikeCount"
             app:layout_constraintTop_toBottomOf="@id/description"/>

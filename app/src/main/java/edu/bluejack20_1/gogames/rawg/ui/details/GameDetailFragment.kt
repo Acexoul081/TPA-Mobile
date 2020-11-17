@@ -4,20 +4,26 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.ekn.gruzer.rawg.entity.GameSingle
+import com.google.firebase.database.*
 import edu.bluejack20_1.gogames.R
+import edu.bluejack20_1.gogames.profile.Sosmed
+import edu.bluejack20_1.gogames.profile.User
 import edu.bluejack20_1.gogames.rawg.RawgApplication
 import edu.bluejack20_1.gogames.rawg.di.detailview.DetailedScreenViewModelModule
 import edu.bluejack20_1.gogames.rawg.ui.details.viewmodel.DetailViewIntent
 import edu.bluejack20_1.gogames.rawg.ui.details.viewmodel.DetailsViewModel
 import edu.bluejack20_1.gogames.rawg.utils.LoadImage
 import kotlinx.android.synthetic.main.fragment_game_detail.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -42,6 +48,7 @@ class GameDetailFragment : Fragment() {
     private lateinit var gameID: String
     private lateinit var gameTitle: String
     private lateinit var gameImage: String
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +59,7 @@ class GameDetailFragment : Fragment() {
         gameID = args.gameID
         gameTitle = args.gameTitle
         gameImage = args.gameImage
+
     }
 
     override fun onAttach(context: Context) {
@@ -74,10 +82,9 @@ class GameDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        details_game_title_txt.text = gameTitle
-        LoadImage(details_image, gameImage)
+        database = FirebaseDatabase.getInstance().reference.child("games").child(gameID)
         share_btn.setOnClickListener{
-            val message = "https://gogames/details/$gameID"
+            val message = "70960.app.link/?gameID=$gameID"
             val intent = Intent()
             intent.action = Intent.ACTION_SEND
             intent.putExtra(Intent.EXTRA_TEXT, message)
@@ -88,6 +95,55 @@ class GameDetailFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner, Observer { render(it) })
         viewModel.handleIntent(DetailViewIntent.FetchData(gameID))
 
+        var listLike : MutableList<String> = mutableListOf<String>()
+        var listDislike : MutableList<String> = mutableListOf<String>()
+        database.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                listLike = mutableListOf<String>()
+                listDislike = mutableListOf<String>()
+                snapshot.child("like").children.forEach{
+                    listLike.add(it.getValue() as String)
+                }
+                snapshot.child("dislike").children.forEach{
+                    listDislike.add(it.getValue() as String)
+                }
+                btn_dislike_news.text = listDislike.size.toString()
+                btn_like_news.text = listLike.size.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+        val user = User.getInstance()
+        btn_like_news.setOnClickListener{
+            if(user != null){
+                listLike.forEach{
+                    if(it == user.getUid()){
+                        return@setOnClickListener
+                    }
+                }
+                listLike.add(user.getUid())
+                listDislike.remove(user.getUid())
+                database.child("like").setValue(listLike)
+                database.child("dislike").setValue(listDislike)
+            }
+        }
+        btn_dislike_news.setOnClickListener{
+            if(user != null){
+                listDislike.forEach{
+                    if(it == user.getUid()){
+                        return@setOnClickListener
+                    }
+                }
+                listDislike.add(user.getUid())
+                listLike.remove(user.getUid())
+                database.child("like").setValue(listLike)
+                database.child("dislike").setValue(listDislike)
+            }
+
+        }
     }
 
     private fun render (viewState: DetailsViewState) = when (viewState) {
@@ -98,20 +154,26 @@ class GameDetailFragment : Fragment() {
     }
 
     private fun isLoading() {
-        //TODO: show loading progress
+        progressbar_detail.visibility = View.VISIBLE
     }
 
     private fun loadingIsDone() {
-        //TODO: hide loading progress
+        progressbar_detail.visibility = View.INVISIBLE
     }
 
     private fun showError(error: String) {
-        //TODO: show error message
+        Log.d("errorDetail", error)
     }
 
     private fun show(gameSingle: GameSingle?) {
         gameSingle?.let {
+            Log.d("deepLink", it.description)
             details_description_txt.text = Html.fromHtml(it.description)
+            details_game_title_txt.text = it.name
+            if(it.backgroundImageURL!=null){
+                LoadImage(details_image, it.backgroundImageURL)
+            }
+
         }
 
     }
