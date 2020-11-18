@@ -12,6 +12,7 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -49,8 +50,6 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
         }
         photo_textView.setOnClickListener{
-            Log.d("RegisterActivity", "show photo selector")
-
             val intent= Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, 0)
@@ -62,12 +61,12 @@ class RegisterActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == 0 && resultCode == Activity.RESULT_OK && data != null){
-            Log.d("RegisterActivity", "Photo Selected")
-
             selectedPhotoUri = data.data
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
-            val bitmapDrawable = BitmapDrawable(bitmap);
+            val bitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap)
+            bitmapDrawable.isCircular = true
+            photo_textView.text = ""
             photo_textView.setBackgroundDrawable(bitmapDrawable)
         }
     }
