@@ -48,10 +48,12 @@ class LoginActivity : AppCompatActivity(){
             progressbar_login.visibility = View.VISIBLE
             email_editText.isEnabled = false
             password_editText.isEnabled = false
+            google_signIn.isEnabled = false
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this){
                     email_editText.isEnabled = true
                     password_editText.isEnabled = true
+                    google_signIn.isEnabled = true
                     progressbar_login.visibility = View.INVISIBLE
                     if(it.isSuccessful){
                         val db : DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")
