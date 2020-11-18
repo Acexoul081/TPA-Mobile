@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.*
@@ -58,6 +59,7 @@ class ProfileFragment : Fragment() {
                     activity?.let {
                         Glide.with(it)
                             .load(snapshot.child("imagePath").value.toString())
+                            .circleCrop()
                             .into(image_view)
                     }
                     snapshot.child("socmed").children.forEach{
@@ -77,6 +79,7 @@ class ProfileFragment : Fragment() {
             text_view_description.text = user.getDescription()
             Glide.with(this)
                 .load(user.getImagePath())
+                .circleCrop()
                 .into(image_view)
             user.getSocmed().forEach{
                 generateSocMedButton(it)
@@ -90,8 +93,6 @@ class ProfileFragment : Fragment() {
 //            }else{
 //                text_not_verified.visibility = View.INVISIBLE
 //            }
-
-
 
             image_view.setOnClickListener{
                 takePictureIntent()

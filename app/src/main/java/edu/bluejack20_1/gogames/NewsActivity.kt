@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import edu.bluejack20_1.gogames.globalClass.WebParam
+import edu.bluejack20_1.gogames.profile.User
 import edu.bluejack20_1.gogames.rawg.RawgApplication
 import edu.bluejack20_1.gogames.rawg.di.detailview.DetailedScreenViewModelModule
 import edu.bluejack20_1.gogames.rawg.ui.details.GameDetailFragment
@@ -55,6 +56,8 @@ class NewsActivity : AppCompatActivity() {
                 R.id.nav_community -> moveToCommunity()
                 R.id.nav_news -> moveToNews()
                 R.id.nav_promo -> moveToPromo()
+                R.id.logout -> logOut()
+                R.id.profile -> moveToProfile()
             }
             true
         }
@@ -78,6 +81,22 @@ class NewsActivity : AppCompatActivity() {
     fun moveToNews() {
         val intent = Intent(this, NewsActivity::class.java)
         startActivity(intent)
+    }
+
+    fun logOut(){
+        FirebaseAuth.getInstance().signOut()
+        User.instance = null
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun moveToProfile() {
+        val fragment = ProfileFragment()
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.games_fragment, fragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     override fun onStart() {

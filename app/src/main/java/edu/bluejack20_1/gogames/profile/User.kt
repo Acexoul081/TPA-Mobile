@@ -8,6 +8,7 @@ class User{
     private lateinit var description: String
     private lateinit var uid: String
     private lateinit var socmeds: List<Sosmed>
+    private lateinit var genre: String
 
     companion object{
         var instance : User?=null
@@ -28,6 +29,7 @@ class User{
         this.description = ""
         this.uid = ""
         this.socmeds = emptyList()
+        this.genre = ""
     }
 
     fun setUsername(username: String){
@@ -84,5 +86,13 @@ class User{
 
     fun getSocmed():List<Sosmed>{
         return this.socmeds
+    }
+
+    fun setGenre (genre : String){
+        this.genre = genre
+    }
+
+    fun getGenre(): String{
+        return this.genre
     }
 }

@@ -167,7 +167,6 @@ class GameDetailFragment : Fragment() {
 
     private fun show(gameSingle: GameSingle?) {
         gameSingle?.let {
-            Log.d("deepLink", it.description)
             details_description_txt.text = Html.fromHtml(it.description)
             details_game_title_txt.text = it.name
             metacritic_textview.text = "Metacritic : "+ it.metacritic.toString()

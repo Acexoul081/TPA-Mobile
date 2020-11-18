@@ -20,11 +20,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekn.gruzer.rawg.entity.Game
 import com.ekn.gruzer.rawg.entity.Genre
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import edu.bluejack20_1.gogames.MainActivity
 import edu.bluejack20_1.gogames.NewsActivity
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import edu.bluejack20_1.gogames.globalClass.WebParam
+import edu.bluejack20_1.gogames.profile.User
 import edu.bluejack20_1.gogames.rawg.RawgApplication
 import edu.bluejack20_1.gogames.rawg.di.gameview.GameScreenViewModelModule
 import io.branch.referral.Branch
@@ -51,7 +53,7 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     private var searchView: SearchView? = null
     private var queryTextListener: SearchView.OnQueryTextListener? = null
     private lateinit var spinner: Spinner
-    private lateinit var sp : PreferencesConfig
+    private lateinit var user : User
     @Inject
     lateinit var viewModel: GamesViewModel
     private val gamesAdapter: GamesAdapter by lazy {
@@ -61,7 +63,7 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        sp = PreferencesConfig(activity as Context)
+        user = User.getInstance()
     }
 
     override fun onCreateView(
@@ -92,8 +94,8 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
 
         viewModel.viewState.observe(viewLifecycleOwner, Observer { render(it) })
 
-        if(FirebaseAuth.getInstance().currentUser != null && sp.getGenre()  != null){
-            viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = sp.getGenre())
+        if(user != null && user.getGenre()  != ""){
+            viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = user.getGenre())
         }else{
             viewModel.perform(GamesViewIntent.FetchFutureRelease)
         }
@@ -144,8 +146,8 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
         genre_spinner.adapter = ArrayAdapter<String>(activity as Context, R.layout.style_spinner, arrayList)
         genre_spinner.onItemSelectedListener = this
         arrayList.forEachIndexed{ index, element ->
-            if(element == sp.getGenre()){
-                genre_spinner.setSelection(index-1)
+            if(element == user.getGenre()){
+                genre_spinner.setSelection(index)
             }
         }
     }
@@ -192,9 +194,9 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
         if (parent != null) {
             if(pos > 0){
                 viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = parent.getItemAtPosition(pos).toString())
-                Log.d("debug", parent.getItemAtPosition(pos).toString())
-                if(FirebaseAuth.getInstance().currentUser != null){
-                    sp.putGenre(parent.getItemAtPosition(pos).toString())
+                if(user != null){
+                    user.setGenre(parent.getItemAtPosition(pos).toString())
+                    FirebaseDatabase.getInstance().reference.child("Users").child(user.getUid()).child("genre").setValue(user.getGenre())
                 }
 
             }

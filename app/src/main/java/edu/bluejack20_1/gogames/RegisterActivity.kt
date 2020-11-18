@@ -90,16 +90,21 @@ class RegisterActivity : AppCompatActivity() {
 //        validate pass alphanumeric
         if(pass.length < 6){
             Toast.makeText(this, "Password to short", Toast.LENGTH_SHORT).show();
-            return;
+            return
         }
         if(!isAlphaNumeric(pass)){
             Toast.makeText(this, "Pass must be alphanumeric", Toast.LENGTH_SHORT).show();
-            return;
+            return
         }
 
         if(!username.matches("^[a-zA-Z0-9]*$".toRegex())){
             Toast.makeText(this, "Username cannot contain special characters", Toast.LENGTH_SHORT).show();
-            return;
+            return
+        }
+
+        if (selectedPhotoUri == null){
+            Toast.makeText(this, "Must Select Profile Picture", Toast.LENGTH_SHORT).show();
+            return
         }
         progressbar_register.visibility = View.VISIBLE
         username_editText.isEnabled = false
@@ -109,7 +114,9 @@ class RegisterActivity : AppCompatActivity() {
         mAuth.createUserWithEmailAndPassword(email,pass)
             .addOnCompleteListener{
                 progressbar_register.visibility = View.INVISIBLE
-                Log.d("RegisterActivity","Success created user with uid: ${it.result?.user?.uid}")
+                username_editText.isEnabled = true
+                email_editText.isEnabled = true
+                password_editText.isEnabled = true
                 uploadImageToFirebaseStorage()
                 val intent = Intent(this, NewsActivity::class.java)
                 startActivity(intent)
