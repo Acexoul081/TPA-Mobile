@@ -50,8 +50,10 @@ class LoginActivity : AppCompatActivity(){
             password_editText.isEnabled = false
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this){
+                    email_editText.isEnabled = true
+                    password_editText.isEnabled = true
+                    progressbar_login.visibility = View.INVISIBLE
                     if(it.isSuccessful){
-                        progressbar_login.visibility = View.INVISIBLE
                         val db : DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")
                         val pref = PreferencesConfig(this)
                         val uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -64,6 +66,7 @@ class LoginActivity : AppCompatActivity(){
                                     User.getInstance().setPassword(snapshot.child("password").value.toString())
                                     User.getInstance().setDescription(snapshot.child("description").value.toString())
                                     User.getInstance().setImagePath(snapshot.child("imagePath").value.toString())
+                                    User.getInstance().setGenre(snapshot.child("genre").value.toString())
                                     User.getInstance().setUid(uid.toString())
                                     val listSosmed : MutableList<Sosmed> = mutableListOf<Sosmed>()
                                     snapshot.child("socmed").children.forEach{snap->
@@ -89,9 +92,7 @@ class LoginActivity : AppCompatActivity(){
                     }else{
                         it.exception?.message?.let{
                             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                            progressbar_login.visibility = View.INVISIBLE
-                            email_editText.isEnabled = true
-                            password_editText.isEnabled = true
+
                         }
                     }
                 }
@@ -179,6 +180,7 @@ class LoginActivity : AppCompatActivity(){
                     User.getInstance().setPassword(snapshot.child("password").value.toString())
                     User.getInstance().setDescription(snapshot.child("description").value.toString())
                     User.getInstance().setImagePath(snapshot.child("imagePath").value.toString())
+                    User.getInstance().setGenre(snapshot.child("genre").value.toString())
                     User.getInstance().setUid(snapshot.child("uid").value.toString())
                     val listSosmed : MutableList<Sosmed> = mutableListOf<Sosmed>()
                     snapshot.child("socmed").children.forEach{
