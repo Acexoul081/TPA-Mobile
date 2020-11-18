@@ -74,13 +74,14 @@
             app:layout_constraintTop_toBottomOf="@id/description"
             android:textColor="@color/White"/>
 
-        <Button
+        <ImageView
             android:id="@+id/BtnLike"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="50dp"
-            android:layout_height="35dp"
-            android:text="@string/like"
-            android:textColor="#FFD300"
+            android:layout_height="33dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/thumb_up"
+            app:tint="#FFD300"
             app:layout_constraintEnd_toStartOf="@id/LikeCount"
             app:layout_constraintTop_toBottomOf="@id/description"/>
 
@@ -90,30 +91,20 @@
             android:layout_height="35dp"
             android:text="35"
             android:layout_marginEnd="20dp"
-            android:paddingTop="10dp"
+            android:paddingTop="7dp"
             app:layout_constraintRight_toLeftOf="@id/BtnLike"
             app:layout_constraintTop_toBottomOf="@id/description"
             android:textColor="@color/White"/>
 
-        <Button
-            android:id="@+id/BtnDislike"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="74dp"
-            android:layout_height="35dp"
-            android:text="@string/dislike"
-            android:textColor="#FFD300"
-            app:layout_constraintRight_toLeftOf="@+id/DislikeCount"
-            app:layout_constraintTop_toBottomOf="@id/description"/>
-
-        <Button
+        <ImageView
             android:id="@+id/btnDislike"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="74dp"
-            android:layout_height="35dp"
-            android:text="Dislike"
-            android:textColor="#FFD300"
+            android:layout_width="50dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_baseline_thumb_down_24"
             app:layout_constraintRight_toLeftOf="@+id/DislikeCount"
-            app:layout_constraintTop_toBottomOf="@id/description" />
+            app:layout_constraintTop_toBottomOf="@id/description"
+            app:tint="#FFD300" />
 
         <Button
             android:id="@+id/btnEdit"
@@ -139,7 +130,7 @@
             app:layout_constraintTop_toBottomOf="@id/description" />
 
         <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/btnDeletex"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="100dp"
             android:layout_height="35dp"
@@ -148,5 +139,7 @@
             android:textColor="#FFD300"
             app:layout_constraintStart_toEndOf="@id/btnEdit"
             app:layout_constraintTop_toBottomOf="@id/description" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

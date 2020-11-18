@@ -11,20 +11,12 @@ class PreferencesConfig(context: Context) {
         sharedPreferences.edit().putString("username", username).apply()
     }
 
-    fun putGenre(genre : String){
-        sharedPreferences.edit().putString("genre", genre).apply()
-    }
-
     fun getUserID() : String? {
         return sharedPreferences.getString("userID", null)
     }
 
     fun getUsername(): String? {
         return sharedPreferences.getString("username", null)
-    }
-
-    fun getGenre(): String?{
-        return sharedPreferences.getString("genre", null)
     }
 
     fun clearSharedPreference() : Boolean{

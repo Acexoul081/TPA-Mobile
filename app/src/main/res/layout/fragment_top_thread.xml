@@ -9,7 +9,7 @@
         android:id="@+id/hotTread"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hot_threads"
+        android:text="Hot Threads"
         android:textAlignment="center"
         android:layout_marginTop="10dp"
         android:textSize="25sp"
@@ -26,81 +26,15 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/slateGray"
-        app:layout_constraintBottom_toTopOf="@id/top1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hotTread" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTopThread"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/top1"
-        android:layout_marginBottom="10dp"
+        android:layout_height="900dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:backgroundTint="@color/electricBlue"
-        android:text="@string/top_1"
-        android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@id/separator"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/top2"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:backgroundTint="@color/electricBlue"
-        android:text="@string/top_2"
-        android:textSize="25sp"
-        app:layout_constraintTop_toBottomOf="@id/top1"/>
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/top3"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:backgroundTint="@color/electricBlue"
-        android:text="@string/top_3"
-        android:textSize="25sp"
-        app:layout_constraintTop_toBottomOf="@id/top2"/>
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/top4"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:backgroundTint="@color/electricBlue"
-        android:text="@string/top_4"
-        android:textSize="25sp"
-        app:layout_constraintTop_toBottomOf="@id/top3"/>
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/top5"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:backgroundTint="@color/electricBlue"
-        android:text="@string/top_5"
-        android:textSize="25sp"
-        app:layout_constraintTop_toBottomOf="@id/top4"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

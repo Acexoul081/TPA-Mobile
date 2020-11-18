@@ -33,7 +33,7 @@
                 android:name="edu.bluejack20_1.gogames.allCommunity.TopThread"
                 android:id="@+id/TopThreadFragment"
                 android:layout_width="match_parent"
-                android:layout_height="430dp"
+                android:layout_height="950dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/separator"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -48,6 +48,10 @@
         android:contentDescription="@string/fab_content_desc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/plus" />
+        app:srcCompat="@drawable/ic_baseline_add_24"
+        android:scaleType="center"
+        app:fabSize="mini"
+        android:scaleX="1.5"
+        android:scaleY="1.5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

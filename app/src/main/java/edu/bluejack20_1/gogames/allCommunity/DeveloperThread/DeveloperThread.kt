@@ -5,19 +5,23 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.allCommunity.Reply.LikeAndDislike
 import edu.bluejack20_1.gogames.allCommunity.Reply.Reply
 import edu.bluejack20_1.gogames.allCommunity.Reply.ReplyAdapter
+import edu.bluejack20_1.gogames.allCommunity.createThread.DataThread
 import edu.bluejack20_1.gogames.allCommunity.editThread.EditThread
+import edu.bluejack20_1.gogames.allCommunity.preferThread.PreferThreadAdapter
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
+import kotlinx.android.synthetic.main.forum_thread.*
 import kotlinx.android.synthetic.main.thread_fix.*
+import kotlinx.android.synthetic.main.thread_fix.BtnDislike
+import kotlinx.android.synthetic.main.thread_fix.BtnLike
+import kotlinx.android.synthetic.main.thread_fix.DislikeCount
+import kotlinx.android.synthetic.main.thread_fix.LikeCount
 import java.util.*
 
 
@@ -32,6 +36,7 @@ class DeveloperThread(
 ) : Fragment(R.layout.thread_fix) {
 
     lateinit var replies: MutableList<Reply>
+    lateinit var preferThreads: MutableList<DataThread>
     private lateinit var reff: DatabaseReference
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -43,6 +48,8 @@ class DeveloperThread(
 
         replies = mutableListOf()
 
+
+
         reff = FirebaseDatabase.getInstance().reference.child("Thread").child(category).child(id).child(
             "Replies"
         )
@@ -51,7 +58,18 @@ class DeveloperThread(
 
         likeDislike()
 
+        getPreferThread()
+
         val pref = PreferencesConfig(context as Context)
+
+//        pref.putUser("", "")
+
+        if(pref.getUserID() == ""){
+            Log.d("test", "Tidak ada")
+        }else{
+            Log.d("test", pref.getUserID()!!)
+        }
+
 
         if(pref.getUserID() == ""){
             BtnLike.visibility = View.INVISIBLE
@@ -60,6 +78,7 @@ class DeveloperThread(
             BtnReply.visibility = View.INVISIBLE
             DislikeCount.visibility = View.GONE
             LikeCount.visibility = View.GONE
+
         }
 
         if(pref.getUserID() == userID){
@@ -134,12 +153,14 @@ class DeveloperThread(
                         rvThreadReplies.layoutManager = LinearLayoutManager(context)
                     }
                 } catch (e: Exception) {
-                    Log.getStackTraceString(e)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                replies.clear()
+                val adapter = ReplyAdapter(replies, category, id, context as Context)
+                rvThreadReplies.adapter = adapter
+                rvThreadReplies.layoutManager = LinearLayoutManager(context)
             }
 
         })
@@ -253,4 +274,45 @@ class DeveloperThread(
         }
     }
 
+    private fun getPreferThread() {
+        preferThreads = mutableListOf()
+
+        var suggestThreads = mutableListOf<DataThread>()
+
+        var ref = FirebaseDatabase.getInstance().reference.child("Thread").child(category)
+
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    preferThreads.clear()
+                    for(i in snapshot.children){
+                        val thread = i.getValue(DataThread::class.java)
+                        preferThreads.add(thread!!)
+                    }
+                    var x = 0
+                    for(i in preferThreads){
+                        var thread = preferThreads.random()
+                        suggestThreads.add(thread)
+                        if(thread.threadID == id){
+                            suggestThreads.removeLast()
+                            x--;
+                        }
+                        x++
+                        if(x == 5) break;
+                    }
+                    var adapter = PreferThreadAdapter(suggestThreads, context as Context)
+                    rvPreferThread.adapter = adapter
+                    rvPreferThread.layoutManager = LinearLayoutManager(context)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
+
+    }
 }

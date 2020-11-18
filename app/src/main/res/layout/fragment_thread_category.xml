@@ -9,14 +9,13 @@
         android:id="@+id/textViewCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/category"
+        android:text="Category"
         android:textSize="30sp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:fontFamily="sans-serif-medium"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separator"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <View
         android:id="@+id/separator"
@@ -25,59 +24,112 @@
         android:layout_marginBottom="1dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:background="@color/slateGray"
-        app:layout_constraintBottom_toTopOf="@id/DeveloperCategory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewCategory" />
 
-    <com.google.android.material.button.MaterialButton
+    <ImageView
         android:id="@+id/DeveloperCategory"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:backgroundTint="@color/electricBlue"
-        android:text="@string/developers"
-        android:textSize="25sp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/developer"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/separator" />
+        app:layout_constraintEnd_toStartOf="@id/GameCategory"
+        app:layout_constraintTop_toBottomOf="@id/searchText" />
 
-    <com.google.android.material.button.MaterialButton
+
+    <ImageView
         android:id="@+id/GameCategory"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/game"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@id/DeveloperCategory"
+        app:layout_constraintEnd_toStartOf="@id/OtherCategory"
+        app:layout_constraintTop_toBottomOf="@id/searchText" />
+
+
+    <ImageView
+        android:id="@+id/OtherCategory"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/other"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/GameCategory"
+        app:layout_constraintTop_toBottomOf="@id/searchText" />
+
+    <TextView
+        android:id="@+id/devText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Developer"
+        android:layout_marginStart="20dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toStartOf="@id/gameText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/DeveloperCategory" />
+
+    <TextView
+        android:id="@+id/gameText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Game"
+        android:layout_marginStart="20dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@id/devText"
+        app:layout_constraintEnd_toStartOf="@id/otherText"
+        app:layout_constraintTop_toBottomOf="@id/DeveloperCategory" />
+
+    <TextView
+        android:id="@+id/otherText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Other"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@+id/gameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/DeveloperCategory" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/searchText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:backgroundTint="@color/electricBlue"
-        android:text="@string/games"
-        android:textSize="25sp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DeveloperCategory" />
+        app:layout_constraintEnd_toStartOf="@id/btnSearch"
+        android:hint="search title ?"
+        android:layout_marginStart="30dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/OtherCategory"
-        android:layout_width="0dp"
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:backgroundTint="@color/electricBlue"
-        android:text="@string/others"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GameCategory" />
+        app:layout_constraintTop_toBottomOf="@id/separator"
+        android:text="Search"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

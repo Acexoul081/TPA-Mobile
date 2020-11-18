@@ -12,8 +12,6 @@ data class DataThread(
     val view: Int,
     val date: String,
     val totalReplied: Int
-) {
-    constructor() : this ("","","","","","",0,0, 0, "", 0) {
-
-    }
+){
+    constructor() : this ("","","","","","",0,0, 0, "", 0)
 }

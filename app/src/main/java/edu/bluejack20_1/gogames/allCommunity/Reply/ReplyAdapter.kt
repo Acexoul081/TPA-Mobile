@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_1.gogames.MainActivity
 import edu.bluejack20_1.gogames.R
@@ -14,6 +15,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.fragment_edit_thread.view.*
 import kotlinx.android.synthetic.main.thread_reply.view.*
 
 class ReplyAdapter(private val replies: List<Reply>, private val category: String, private val threadId: String, var parentContext: Context) : RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder>() {
@@ -41,7 +43,7 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
             var dislike = replies[position].dislike
 
             if(userId == ""){
-                BtnDislike.visibility = View.INVISIBLE
+                btnDislike.visibility = View.INVISIBLE
                 BtnLike.visibility = View.INVISIBLE
                 LikeCount.visibility = View.INVISIBLE
                 DislikeCount.visibility = View.INVISIBLE
@@ -49,7 +51,7 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
 
             if(userId == replies[position].user_id){
                 btnEdit.visibility = View.VISIBLE
-                btnDelete.visibility = View.VISIBLE
+                btnDeletex.visibility = View.VISIBLE
             }
 
             btnEdit.setOnClickListener {
@@ -58,14 +60,14 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
                     var text: Editable = SpannableStringBuilder(description.text)
                     editDesc.text = text
                     btnEdit.text = "ACC"
-                    btnDelete.visibility = View.INVISIBLE
+                    btnDeletex.visibility = View.INVISIBLE
                     btnCancel.visibility = View.VISIBLE
                     description.visibility = View.INVISIBLE
                 }else{
                     editDesc.visibility = View.INVISIBLE
                     btnCancel.visibility = View.INVISIBLE
                     description.visibility = View.VISIBLE
-                    btnDelete.visibility = View.VISIBLE
+                    btnDeletex.visibility = View.VISIBLE
                     btnEdit.text = "EDIT"
                     description.text = editDesc.text
                     FirebaseDatabase.getInstance().reference.child("Thread").child(category).child(threadId).child("Replies").child(replies[position].id).child("description").setValue(editDesc.text.toString())
@@ -76,11 +78,11 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
                 editDesc.visibility = View.INVISIBLE
                 btnCancel.visibility = View.INVISIBLE
                 description.visibility = View.VISIBLE
-                btnDelete.visibility = View.VISIBLE
+                btnDeletex.visibility = View.VISIBLE
                 btnEdit.text = "EDIT"
             }
 
-            btnDelete.setOnClickListener {
+            btnDeletex.setOnClickListener {
                 val ref = FirebaseDatabase.getInstance().reference.child("Thread").child(category).child(threadId).child("Replies").child(replies[position].id)
                 ref.addListenerForSingleValueEvent(object  : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -140,7 +142,7 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
                 })
             }
 
-            BtnDislike.setOnClickListener {
+            btnDislike.setOnClickListener {
                 reff.addListenerForSingleValueEvent(object :  ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if(userId != null){
@@ -148,16 +150,16 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
                                 if(snapshot.hasChild(userId!!)){
                                     if(snapshot.child(userId).child("type").value.toString() == "Dislike"){
                                         dislike -= 1
-                                        reff.parent?.child("dislike")?.setValue(like)
+                                        reff.parent?.child("dislike")?.setValue(dislike)
                                         DislikeCount.text = (dislike).toString()
                                         reff.child(userId).removeValue()
                                     }else{
                                         like -= 1
-                                        reff.parent?.child("like")?.setValue(like)
+                                        reff.parent?.child("like")?.setValue(dislike)
                                         LikeCount.text = (like).toString()
                                         reff.child(userId).child("type").setValue("Dislike")
                                         dislike += 1
-                                        reff.parent?.child("dislike")?.setValue(like)
+                                        reff.parent?.child("dislike")?.setValue(dislike)
                                         DislikeCount.text = (dislike).toString()
                                     }
 
@@ -165,14 +167,14 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
                                     val likeAndDislike = LikeAndDislike(userId, "Dislike")
                                     reff.child(userId).setValue(likeAndDislike)
                                     dislike += 1
-                                    reff.parent?.child("dislike")?.setValue(like)
+                                    reff.parent?.child("dislike")?.setValue(dislike)
                                     DislikeCount.text = (dislike).toString()
                                 }
                             }else{
                                 val likeAndDislike = LikeAndDislike(userId, "Dislike")
                                 reff.child(userId).setValue(likeAndDislike)
                                 dislike += 1
-                                reff.parent?.child("dislike")?.setValue(like)
+                                reff.parent?.child("dislike")?.setValue(dislike)
                                 DislikeCount.text = (dislike).toString()
                             }
                         }

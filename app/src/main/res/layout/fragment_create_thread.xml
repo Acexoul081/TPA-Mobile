@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:fontFamily="sans-serif-black"
-        android:text="@string/create_thread"
+        android:text="CREATE THREAD"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
         android:id="@+id/textTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/title_doubleDot"
+        android:text="Title :"
         android:layout_marginTop="30dp"
         android:layout_marginStart="40dp"
         android:textSize="20sp"
@@ -38,7 +38,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginTop="20dp"
-        android:hint="@string/title"
+        android:hint="Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textTitle" />
@@ -47,7 +47,7 @@
         android:id="@+id/textDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/description_doubleDota"
+        android:text="Description :"
         android:layout_marginTop="30dp"
         android:layout_marginStart="40dp"
         android:textSize="20sp"
@@ -63,7 +63,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginTop="20dp"
-        android:hint="@string/description"
+        android:hint="Description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textDescription" />
@@ -72,7 +72,7 @@
         android:id="@+id/textCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/category_doubeDot"
+        android:text="Category :"
         android:layout_marginTop="30dp"
         android:layout_marginStart="40dp"
         android:textSize="20sp"
@@ -103,7 +103,7 @@
         android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/submit"
+        android:text="Submit"
         app:layout_constraintTop_toBottomOf="@id/createCategory" />
 
     <com.google.android.material.button.MaterialButton
@@ -118,7 +118,7 @@
         android:fontFamily="sans-serif-black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/cancel"
+        android:text="cancel"
         app:layout_constraintTop_toBottomOf="@id/submit" />
 
 
