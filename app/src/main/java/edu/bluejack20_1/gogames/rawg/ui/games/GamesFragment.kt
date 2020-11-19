@@ -165,8 +165,9 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
-        inflater.inflate(R.menu.main_menu, menu)
+        inflater.inflate(R.menu.top_app_bar, menu)
         val menuItem = menu.findItem(R.id.action_search)
+        Log.d("inDebug", menuItem.toString())
         val searchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         if (menuItem != null) {
             searchView = menuItem.actionView as SearchView

@@ -9,12 +9,19 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import edu.bluejack20_1.gogames.itad.api.RetrofitClient
 import edu.bluejack20_1.gogames.itad.api.adapter.DealAdapter
 import edu.bluejack20_1.gogames.itad.api.entity.Deal
 import edu.bluejack20_1.gogames.itad.api.entity.ItadResult
+import edu.bluejack20_1.gogames.profile.User
 import kotlinx.android.synthetic.main.activity_promo.*
 import kotlinx.android.synthetic.main.activity_promo.Navigation
 import retrofit2.Call
@@ -67,9 +74,19 @@ class PromoActivity : AppCompatActivity() {
                 R.id.nav_community -> moveToCommunity()
                 R.id.nav_news -> moveToNews()
                 R.id.nav_promo -> moveToPromo()
+                R.id.profile -> moveToProfile()
+                R.id.logout -> logOut()
             }
             true
         }
+
+        val header: View = (findViewById<NavigationView>(R.id.Navigation)).getHeaderView(0)
+        (header.findViewById(R.id.userName) as TextView).text = User.getInstance().getUsername()
+        Glide.with(this)
+            .load(User.getInstance().getImagePath())
+            .circleCrop()
+            .into((header.findViewById(R.id.menu_user_pict) as ImageView))
+
 
 //        val intent = Intent(this, ReminderBroadcast::class.java)
 //        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0 , intent, 0)
@@ -107,5 +124,21 @@ class PromoActivity : AppCompatActivity() {
     fun moveToNews() {
         val intent = Intent(this, NewsActivity::class.java)
         startActivity(intent)
+    }
+
+    fun logOut(){
+        FirebaseAuth.getInstance().signOut()
+        User.instance = null
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun moveToProfile() {
+        val fragment = ProfileFragment()
+        supportFragmentManager.beginTransaction().apply {
+            add(android.R.id.content, fragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 }

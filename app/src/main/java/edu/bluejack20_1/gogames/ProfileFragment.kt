@@ -2,6 +2,7 @@ package edu.bluejack20_1.gogames
 
 import android.app.ActionBar
 import android.app.Activity
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -12,12 +13,16 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.*
@@ -48,6 +53,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity?.invalidateOptionsMenu()
         if(arguments?.getString("userID") != null){
             database = FirebaseDatabase.getInstance().reference.child("Users").child(requireArguments().getString("userID")!!)
             database.addValueEventListener(object  : ValueEventListener{
@@ -97,6 +103,8 @@ class ProfileFragment : Fragment() {
             image_view.setOnClickListener{
                 takePictureIntent()
             }
+//            val header: View? = (activity?.findViewById<NavigationView>(R.id.topAppBar))?.getHeaderView(0)
+//            header?.findViewById(R.id.action_search).visibility = View.INVISIBLE
 
 //        button_save.setOnClickListener{
 //            val photo = when{
@@ -152,7 +160,6 @@ class ProfileFragment : Fragment() {
                 startActivity(Intent.createChooser(intent, "Share to : "))
             }
         }
-
     }
 
     private fun generateSocMedButton(it : Sosmed){
@@ -230,5 +237,11 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem(R.id.action_search).setVisible(false)
+        Log.d("Fggans", "makan bor")
+        super.onPrepareOptionsMenu(menu)
     }
 }
