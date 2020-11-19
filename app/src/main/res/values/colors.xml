@@ -10,4 +10,6 @@
     <color name="skyBlue">#87CEFA</color>
     <color name="lightGray">#D3D3D3</color>
     <color name="black">#000000</color>
+    <color name="red">#000000</color>
+    <color name="darkGray">#000000</color>
 </resources>
