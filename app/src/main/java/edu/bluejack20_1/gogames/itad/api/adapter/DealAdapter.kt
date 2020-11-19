@@ -27,9 +27,14 @@ class DealAdapter(private val list: ArrayList<Deal>, private val activity: AppCo
     inner class DealViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(deal: Deal){
             with(itemView){
-                promo_game_title.text = deal.title
-                promo_game_old_price.text = deal.price_old.toString()
-                promo_game_new_price.text = deal.price_new.toString()
+                if(deal.title.length > 15){
+                    promo_game_title.text = deal.title.substring(0,15)+"..."
+                }else{
+                    promo_game_title.text = deal.title
+                }
+
+                promo_game_old_price.text = "$" + deal.price_old.toString()
+                promo_game_new_price.text = "$" + deal.price_new.toString()
                 price_cut.text = deal.price_cut.toString() + "%"
                 if(deal.expiry != null){
                     val date = (deal.expiry as Double *1000)
@@ -37,7 +42,6 @@ class DealAdapter(private val list: ArrayList<Deal>, private val activity: AppCo
                     dayleft_textview.text = convertDate(lon)
                     //button function
                     notify_button.setOnClickListener{
-                        Log.d("notif", "masuk not")
                         val time = dayleft_textview.text.toString().split("-").map { it.toInt() }
 
                         val calendar = Calendar.getInstance()
@@ -64,11 +68,6 @@ class DealAdapter(private val list: ArrayList<Deal>, private val activity: AppCo
                     notify_button.visibility = View.INVISIBLE
                     cancelNotify_button.visibility = View.INVISIBLE
                 }
-
-
-
-
-
             }
         }
     }
