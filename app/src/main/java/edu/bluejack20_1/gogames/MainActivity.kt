@@ -4,16 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import edu.bluejack20_1.gogames.R.string.close_navigation
 import edu.bluejack20_1.gogames.R.string.open_navigation
 import edu.bluejack20_1.gogames.allCommunity.DeveloperThread.DeveloperThread
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import com.google.firebase.auth.FirebaseAuth
+import edu.bluejack20_1.gogames.profile.User
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_hamburger.*
 import kotlinx.coroutines.CoroutineScope
@@ -59,10 +65,16 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        topAppBar.setNavigationOnClickListener {
+//            drawer_layout.openDrawer(Gravity.START)
+//        }
 
-        topAppBar.setNavigationOnClickListener {
-            drawer_layout.openDrawer(Gravity.START)
-        }
+        val header: View = (findViewById<NavigationView>(R.id.Navigation)).getHeaderView(0)
+        (header.findViewById(R.id.userName) as TextView).text = User.getInstance().getUsername()
+        Glide.with(this)
+            .load(User.getInstance().getImagePath())
+            .circleCrop()
+            .into((header.findViewById(R.id.menu_user_pict) as ImageView))
 
         Navigation.setNavigationItemSelectedListener {
             when(it.itemId){
@@ -70,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_news -> moveToNews()
                 R.id.nav_promo -> moveToPromo()
                 R.id.profile -> moveToProfile()
+                R.id.logout -> logOut()
             }
             true
         }
@@ -97,6 +110,13 @@ class MainActivity : AppCompatActivity() {
             addToBackStack(null)
             commit()
         }
+    }
+
+    fun logOut(){
+        FirebaseAuth.getInstance().signOut()
+        User.instance = null
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -150,5 +170,12 @@ class MainActivity : AppCompatActivity() {
         val sharePref = PreferencesConfig(this)
         sharePref.putUser(uid, username)
         Log.d("test", sharePref.getUserID() as String)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+//        if (menu != null) {
+//            menu.findItem(R.id.action_search).setVisible(false)
+//        }
+        return super.onPrepareOptionsMenu(menu)
     }
 }

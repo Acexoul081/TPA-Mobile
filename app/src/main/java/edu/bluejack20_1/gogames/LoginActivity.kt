@@ -60,6 +60,7 @@ class LoginActivity : AppCompatActivity(){
                         val pref = PreferencesConfig(this)
                         val uid = FirebaseAuth.getInstance().currentUser?.uid
                         val email = FirebaseAuth.getInstance().currentUser?.email
+                        Log.d("KAbangs", uid.toString())
                         db.child(uid.toString()).addValueEventListener(object : ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if(snapshot.exists()){
@@ -75,7 +76,9 @@ class LoginActivity : AppCompatActivity(){
                                         listSosmed.add(snap.getValue(Sosmed :: class.java) as Sosmed)
                                     }
                                     User.getInstance().setSocmed(listSosmed)
+                                    moveToNews()
                                 }
+                                Log.d("LTgans", "makan bor")
                             }
 
                             override fun onCancelled(error: DatabaseError) {
@@ -89,8 +92,7 @@ class LoginActivity : AppCompatActivity(){
                                 pref.putUser(uid, email)
                             }
                         }
-                        val intent = Intent(this, NewsActivity::class.java)
-                        startActivity(intent)
+
                     }else{
                         it.exception?.message?.let{
                             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
@@ -205,6 +207,10 @@ class LoginActivity : AppCompatActivity(){
             }
 
         })
+    }
+    private fun moveToNews(){
+        val intent = Intent(this, NewsActivity::class.java)
+        startActivity(intent)
     }
 
 }

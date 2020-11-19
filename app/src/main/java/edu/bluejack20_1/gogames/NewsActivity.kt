@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.Menu
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +16,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import edu.bluejack20_1.gogames.globalClass.WebParam
@@ -24,7 +28,10 @@ import edu.bluejack20_1.gogames.rawg.ui.games.GamesFragment
 import edu.bluejack20_1.gogames.rawg.ui.games.GamesFragmentDirections
 import io.branch.referral.Branch
 import io.branch.referral.BranchError
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_news.*
+import kotlinx.android.synthetic.main.activity_news.Navigation
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.header_hamburger.*
 import org.json.JSONObject
 
@@ -32,6 +39,7 @@ import org.json.JSONObject
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
+    private var profile = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +72,13 @@ class NewsActivity : AppCompatActivity() {
         }
 
         val header: View = (findViewById<NavigationView>(R.id.Navigation)).getHeaderView(0)
-        (header.findViewById(R.id.userName) as TextView).text = FirebaseAuth.getInstance().currentUser?.email
+        (header.findViewById(R.id.userName) as TextView).text = User.getInstance().getUsername()
+        Glide.with(this)
+            .load(User.getInstance().getImagePath())
+            .circleCrop()
+            .into((header.findViewById(R.id.menu_user_pict) as ImageView))
 
-        Branch.sessionBuilder(this).withCallback(branchListener).withData(this.intent?.data).init()
+//        Branch.sessionBuilder(this).withCallback(branchListener).withData(this.intent?.data).init()
     }
 
     fun moveToPromo() {
@@ -92,6 +104,8 @@ class NewsActivity : AppCompatActivity() {
     }
 
     fun moveToProfile() {
+        profile = true
+        invalidateOptionsMenu()
         val fragment = ProfileFragment()
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.games_fragment, fragment)
@@ -99,11 +113,29 @@ class NewsActivity : AppCompatActivity() {
             commit()
         }
     }
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        if(profile == true){
+            menu?.findItem(R.id.action_search)?.setVisible(false)
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
 
     override fun onStart() {
         super.onStart()
         // Branch init
         Branch.sessionBuilder(this).withCallback(branchListener).withData(this.intent?.data).init()
+    }
+
+//    override fun onResume() {
+//        profile = false
+//        invalidateOptionsMenu()
+//        super.onResume()
+//    }
+
+    override fun onBackPressed() {
+        profile = profile == false
+        invalidateOptionsMenu()
+        super.onBackPressed()
     }
 
     override fun onNewIntent(intent: Intent) {
