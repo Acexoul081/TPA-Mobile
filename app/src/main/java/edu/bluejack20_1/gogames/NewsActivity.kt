@@ -49,6 +49,7 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
+
         toggle = ActionBarDrawerToggle(
             this,
             drawer_layoutn,
@@ -71,6 +72,7 @@ class NewsActivity : AppCompatActivity() {
                 R.id.nav_promo -> moveToPromo()
                 R.id.logout -> logOut()
                 R.id.profile -> moveToProfile()
+                R.id.login -> login()
             }
             true
         }
@@ -81,6 +83,21 @@ class NewsActivity : AppCompatActivity() {
             .load(User.getInstance().getImagePath())
             .circleCrop()
             .into((header.findViewById(R.id.menu_user_pict) as ImageView))
+
+        var menuNav = (findViewById<NavigationView>(R.id.Navigation)).menu
+
+        val sharePref = PreferencesConfig(this)
+
+
+        if(sharePref.getUserID().isNullOrBlank()){
+            menuNav.findItem(R.id.logout).isVisible = false
+            menuNav.findItem(R.id.profile).isVisible = false
+            menuNav.findItem(R.id.login).isVisible = true
+        }else{
+            menuNav.findItem(R.id.login).isVisible = false
+            menuNav.findItem(R.id.logout).isVisible = true
+            menuNav.findItem(R.id.profile).isVisible = true
+        }
 
 //        Branch.sessionBuilder(this).withCallback(branchListener).withData(this.intent?.data).init()
     }
@@ -124,6 +141,11 @@ class NewsActivity : AppCompatActivity() {
             menu?.findItem(R.id.action_search)?.setVisible(false)
         }
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    fun login(){
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onStart() {

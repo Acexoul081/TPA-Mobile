@@ -1,5 +1,6 @@
 package edu.bluejack20_1.gogames
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -34,11 +35,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     private lateinit var auth: FirebaseAuth
 
+    @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
+
+        val sharePref = PreferencesConfig(this)
 
         if(intent.extras != null){
             val bundle = intent.extras
@@ -69,20 +73,34 @@ class MainActivity : AppCompatActivity() {
 //            drawer_layout.openDrawer(Gravity.START)
 //        }
 
-        val header: View = (findViewById<NavigationView>(R.id.Navigation)).getHeaderView(0)
+        val header: View = (findViewById<NavigationView>(R.id.NavigationU)).getHeaderView(0)
         (header.findViewById(R.id.userName) as TextView).text = User.getInstance().getUsername()
         Glide.with(this)
             .load(User.getInstance().getImagePath())
             .circleCrop()
             .into((header.findViewById(R.id.menu_user_pict) as ImageView))
 
-        Navigation.setNavigationItemSelectedListener {
+        var menuNav = (findViewById<NavigationView>(R.id.NavigationU)).menu
+
+        if(sharePref.getUserID().isNullOrBlank()){
+            menuNav.findItem(R.id.logout).isVisible = false
+            menuNav.findItem(R.id.profile).isVisible = false
+            menuNav.findItem(R.id.login).isVisible = true
+        }else{
+            menuNav.findItem(R.id.login).isVisible = false
+            menuNav.findItem(R.id.logout).isVisible = true
+            menuNav.findItem(R.id.profile).isVisible = true
+        }
+
+
+        NavigationU.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_community -> moveToCommunity()
                 R.id.nav_news -> moveToNews()
                 R.id.nav_promo -> moveToPromo()
                 R.id.profile -> moveToProfile()
                 R.id.logout -> logOut()
+                R.id.login -> login()
             }
             true
         }
@@ -118,6 +136,11 @@ class MainActivity : AppCompatActivity() {
         val sharePref = PreferencesConfig(this)
         sharePref.clearSharedPreference()
         val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun login(){
+        val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
 

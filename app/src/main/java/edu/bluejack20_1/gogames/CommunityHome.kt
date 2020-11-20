@@ -13,7 +13,7 @@ class CommunityHome : Fragment(R.layout.home_community) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val sharePref = PreferencesConfig(context as Context)
-        if(sharePref.getUserID() == null){
+        if(sharePref.getUserID().isNullOrBlank()){
             addThread.visibility = View.GONE
         }
         addThread.setOnClickListener {

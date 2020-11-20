@@ -78,6 +78,7 @@ class PromoActivity : AppCompatActivity() {
                 R.id.nav_promo -> moveToPromo()
                 R.id.profile -> moveToProfile()
                 R.id.logout -> logOut()
+                R.id.login -> login()
             }
             true
         }
@@ -89,6 +90,19 @@ class PromoActivity : AppCompatActivity() {
             .circleCrop()
             .into((header.findViewById(R.id.menu_user_pict) as ImageView))
 
+        var menuNav = (findViewById<NavigationView>(R.id.Navigation)).menu
+
+        val sharePref = PreferencesConfig(this)
+
+        if(sharePref.getUserID().isNullOrBlank()){
+            menuNav.findItem(R.id.logout).isVisible = false
+            menuNav.findItem(R.id.profile).isVisible = false
+            menuNav.findItem(R.id.login).isVisible = true
+        }else{
+            menuNav.findItem(R.id.login).isVisible = false
+            menuNav.findItem(R.id.logout).isVisible = true
+            menuNav.findItem(R.id.profile).isVisible = true
+        }
 
 //        val intent = Intent(this, ReminderBroadcast::class.java)
 //        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0 , intent, 0)
@@ -134,6 +148,11 @@ class PromoActivity : AppCompatActivity() {
         val sharePref = PreferencesConfig(this)
         sharePref.clearSharedPreference()
         val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun login(){
+        val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
 
