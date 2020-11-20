@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_promo -> moveToPromo()
                 R.id.profile -> moveToProfile()
                 R.id.logout -> logOut()
+                R.id.login -> login()
             }
             true
         }
@@ -135,6 +136,11 @@ class MainActivity : AppCompatActivity() {
         val sharePref = PreferencesConfig(this)
         sharePref.clearSharedPreference()
         val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun login(){
+        val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
 

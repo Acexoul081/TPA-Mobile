@@ -72,6 +72,7 @@ class NewsActivity : AppCompatActivity() {
                 R.id.nav_promo -> moveToPromo()
                 R.id.logout -> logOut()
                 R.id.profile -> moveToProfile()
+                R.id.login -> login()
             }
             true
         }
@@ -140,6 +141,11 @@ class NewsActivity : AppCompatActivity() {
             menu?.findItem(R.id.action_search)?.setVisible(false)
         }
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    fun login(){
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onStart() {
