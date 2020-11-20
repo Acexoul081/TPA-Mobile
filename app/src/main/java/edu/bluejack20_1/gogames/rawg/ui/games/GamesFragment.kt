@@ -198,6 +198,13 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
                 if(user != null){
                     user.setGenre(parent.getItemAtPosition(pos).toString())
                     FirebaseDatabase.getInstance().reference.child("Users").child(user.getUid()).child("genre").setValue(user.getGenre())
+                    val pref = PreferencesConfig(activity as Context)
+                    pref.putUser(user.getUid(), User.getInstance().getUsername()
+                        , User.getInstance().getImagePath()
+                        , User.getInstance().getDescription()
+                        , User.getInstance().getGenre()
+                        , User.getInstance().getSocmed()
+                        , User.getInstance().getEmail())
                 }
 
             }

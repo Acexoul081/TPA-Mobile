@@ -70,6 +70,11 @@ class LoginActivity : AppCompatActivity(){
                                     User.getInstance().setImagePath(snapshot.child("imagePath").value.toString())
                                     User.getInstance().setGenre(snapshot.child("genre").value.toString())
                                     User.getInstance().setUid(uid.toString())
+                                    val listSosmed : MutableList<Sosmed> = mutableListOf<Sosmed>()
+                                    snapshot.child("socmed").children.forEach{snap->
+                                        listSosmed.add(snap.getValue(Sosmed :: class.java) as Sosmed)
+                                    }
+                                    User.getInstance().setSocmed(listSosmed)
                                     if (uid != null) {
                                         pref.putUser(uid, User.getInstance().getUsername()
                                             , User.getInstance().getImagePath()
@@ -78,11 +83,7 @@ class LoginActivity : AppCompatActivity(){
                                             , User.getInstance().getSocmed()
                                             , User.getInstance().getEmail())
                                     }
-                                    val listSosmed : MutableList<Sosmed> = mutableListOf<Sosmed>()
-                                    snapshot.child("socmed").children.forEach{snap->
-                                        listSosmed.add(snap.getValue(Sosmed :: class.java) as Sosmed)
-                                    }
-                                    User.getInstance().setSocmed(listSosmed)
+
                                     moveToNews()
                                 }
                             }

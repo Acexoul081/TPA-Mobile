@@ -1,5 +1,6 @@
 package edu.bluejack20_1.gogames.profile
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import edu.bluejack20_1.gogames.ProfileFragment
 import edu.bluejack20_1.gogames.R
+import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_update1.*
 
@@ -48,10 +50,19 @@ class Update1Fragment : Fragment() {
                 .setDisplayName(newUsername)
                 .build()
             progressbar_update.visibility = View.VISIBLE
+            if(newPassword != ""){
+                FirebaseAuth.getInstance().currentUser?.updatePassword(newPassword)
+            }
 
-            FirebaseAuth.getInstance().currentUser?.updateProfile(updates)
-            FirebaseAuth.getInstance().currentUser?.updatePassword(newPassword)?.addOnCompleteListener{
+            FirebaseAuth.getInstance().currentUser?.updateProfile(updates)?.addOnCompleteListener{
                 progressbar_update.visibility = View.INVISIBLE
+                val pref = PreferencesConfig(activity as Context)
+                pref.putUser(user.getUid(), User.getInstance().getUsername()
+                    , User.getInstance().getImagePath()
+                    , User.getInstance().getDescription()
+                    , User.getInstance().getGenre()
+                    , User.getInstance().getSocmed()
+                    , User.getInstance().getEmail())
             }
         }
     }
