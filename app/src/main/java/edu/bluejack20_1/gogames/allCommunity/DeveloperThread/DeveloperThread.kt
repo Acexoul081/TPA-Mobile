@@ -64,14 +64,9 @@ class DeveloperThread(
 
 //        pref.putUser("", "")
 
-        if(pref.getUserID() == ""){
-            Log.d("test", "Tidak ada")
-        }else{
-            Log.d("test", pref.getUserID()!!)
-        }
 
 
-        if(pref.getUserID() == ""){
+        if(pref.getUserID().isNullOrBlank()){
             BtnLike.visibility = View.INVISIBLE
             BtnDislike.visibility = View.INVISIBLE
             replyText.visibility = View.INVISIBLE

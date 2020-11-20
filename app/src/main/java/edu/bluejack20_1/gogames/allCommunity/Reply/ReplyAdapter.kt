@@ -42,7 +42,7 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
             var like = replies[position].like
             var dislike = replies[position].dislike
 
-            if(userId == ""){
+            if(userId.isNullOrBlank()){
                 btnDislike.visibility = View.INVISIBLE
                 BtnLike.visibility = View.INVISIBLE
                 LikeCount.visibility = View.INVISIBLE
