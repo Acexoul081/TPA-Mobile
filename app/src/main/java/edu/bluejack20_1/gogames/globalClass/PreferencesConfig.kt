@@ -1,6 +1,7 @@
 package edu.bluejack20_1.gogames.globalClass
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import edu.bluejack20_1.gogames.profile.Sosmed
@@ -15,7 +16,7 @@ class PreferencesConfig(context: Context) {
         sharedPreferences.edit().putString("imagePath", imagePath).apply()
         sharedPreferences.edit().putString("description", description).apply()
         sharedPreferences.edit().putString("genre", genre).apply()
-        sharedPreferences.edit().putString("email", email)
+        sharedPreferences.edit().putString("email", email).apply()
         val gson = Gson()
         sharedPreferences.edit().putString("socmeds", gson.toJson(socmeds)).apply()
     }

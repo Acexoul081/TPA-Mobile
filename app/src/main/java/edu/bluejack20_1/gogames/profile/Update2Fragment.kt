@@ -1,6 +1,7 @@
 package edu.bluejack20_1.gogames.profile
 
 import android.app.ActionBar
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import edu.bluejack20_1.gogames.R
+import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import kotlinx.android.synthetic.main.fragment_update2.*
 
 
@@ -71,6 +73,13 @@ class Update2Fragment : Fragment() {
             }
             user.setSocmed(listOfLink.toList())
             database.child("Users").child(user.getUid()).setValue(user)
+            val pref = PreferencesConfig(activity as Context)
+            pref.putUser(user.getUid(), User.getInstance().getUsername()
+                , User.getInstance().getImagePath()
+                , User.getInstance().getDescription()
+                , User.getInstance().getGenre()
+                , User.getInstance().getSocmed()
+                , User.getInstance().getEmail())
         }
     }
 

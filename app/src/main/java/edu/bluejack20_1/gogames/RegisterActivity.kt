@@ -36,6 +36,7 @@ class RegisterActivity : AppCompatActivity() {
             if(pref.getUserID() != null){
                 val user = User.getInstance()
                 user.setUid(pref.getUserID()!!)
+                user.setUsername(pref.getUsername()!!)
                 if(pref.getGenre() != null){
                     user.setGenre(pref.getGenre()!!)
                 }
