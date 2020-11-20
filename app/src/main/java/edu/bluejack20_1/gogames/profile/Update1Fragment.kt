@@ -1,6 +1,7 @@
 package edu.bluejack20_1.gogames.profile
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import edu.bluejack20_1.gogames.NewsActivity
 import edu.bluejack20_1.gogames.ProfileFragment
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
@@ -43,14 +45,16 @@ class Update1Fragment : Fragment() {
             val newPassword = ET_update_password.text.toString()
             database.child("Users").child(user.getUid()).child("username").setValue(newUsername)
             database.child("Users").child(user.getUid()).child("description").setValue(newDescription)
-            database.child("Users").child(user.getUid()).child("password").setValue(newPassword).addOnSuccessListener {
+            user.setUsername(newUsername)
+            user.setDescription(newDescription)
 
-            }
             val updates = UserProfileChangeRequest.Builder()
                 .setDisplayName(newUsername)
                 .build()
             progressbar_update.visibility = View.VISIBLE
             if(newPassword != ""){
+                user.setPassword(newPassword)
+                database.child("Users").child(user.getUid()).child("password").setValue(newPassword)
                 FirebaseAuth.getInstance().currentUser?.updatePassword(newPassword)
             }
 
@@ -63,6 +67,7 @@ class Update1Fragment : Fragment() {
                     , User.getInstance().getGenre()
                     , User.getInstance().getSocmed()
                     , User.getInstance().getEmail())
+                requireActivity().startActivity(Intent(activity as Context, NewsActivity::class.java))
             }
         }
     }
