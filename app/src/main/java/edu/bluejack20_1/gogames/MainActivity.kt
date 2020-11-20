@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
         User.instance = null
         val sharePref = PreferencesConfig(this)
-        sharePref.putUser("", "")
+        sharePref.clearSharedPreference()
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
@@ -168,11 +168,6 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private fun sharedPreferences(uid: String, username: String){
-        val sharePref = PreferencesConfig(this)
-        sharePref.putUser(uid, username)
-        Log.d("test", sharePref.getUserID() as String)
-    }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 //        if (menu != null) {

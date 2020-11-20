@@ -132,7 +132,7 @@ class PromoActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
         User.instance = null
         val sharePref = PreferencesConfig(this)
-        sharePref.putUser("", "")
+        sharePref.clearSharedPreference()
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }

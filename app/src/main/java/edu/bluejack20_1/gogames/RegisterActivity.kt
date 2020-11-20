@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import edu.bluejack20_1.gogames.profile.User
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
@@ -29,6 +30,31 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(intent.getStringExtra("message") == null){
+            val pref = PreferencesConfig(this)
+            if(pref.getUserID() != null){
+                val user = User.getInstance()
+                user.setUid(pref.getUserID()!!)
+                if(pref.getGenre() != null){
+                    user.setGenre(pref.getGenre()!!)
+                }
+                if(pref.getSocmeds() != null){
+                    user.setSocmed(pref.getSocmeds()!!)
+                }
+                if(pref.getEmail() != null){
+                    user.setEmail(pref.getEmail()!!)
+                }
+                if(pref.getImagePath() != null){
+                    user.setImagePath(pref.getImagePath()!!)
+                }
+                if(pref.getDescription() != null){
+                    user.setDescription(pref.getDescription()!!)
+                }
+
+                startActivity(Intent(this, NewsActivity::class.java))
+            }
+        }
         setContentView(R.layout.activity_register)
 
         database = Firebase.database.reference

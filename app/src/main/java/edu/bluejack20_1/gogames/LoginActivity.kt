@@ -60,7 +60,6 @@ class LoginActivity : AppCompatActivity(){
                         val pref = PreferencesConfig(this)
                         val uid = FirebaseAuth.getInstance().currentUser?.uid
                         val email = FirebaseAuth.getInstance().currentUser?.email
-                        Log.d("KAbangs", uid.toString())
                         db.child(uid.toString()).addValueEventListener(object : ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if(snapshot.exists()){
@@ -72,7 +71,12 @@ class LoginActivity : AppCompatActivity(){
                                     User.getInstance().setGenre(snapshot.child("genre").value.toString())
                                     User.getInstance().setUid(uid.toString())
                                     if (uid != null) {
-                                        pref.putUser(uid, User.getInstance().getUsername())
+                                        pref.putUser(uid, User.getInstance().getUsername()
+                                            , User.getInstance().getImagePath()
+                                            , User.getInstance().getDescription()
+                                            , User.getInstance().getGenre()
+                                            , User.getInstance().getSocmed()
+                                            , User.getInstance().getEmail())
                                     }
                                     val listSosmed : MutableList<Sosmed> = mutableListOf<Sosmed>()
                                     snapshot.child("socmed").children.forEach{snap->
@@ -81,7 +85,6 @@ class LoginActivity : AppCompatActivity(){
                                     User.getInstance().setSocmed(listSosmed)
                                     moveToNews()
                                 }
-                                Log.d("LTgans", "makan bor")
                             }
 
                             override fun onCancelled(error: DatabaseError) {
@@ -105,7 +108,9 @@ class LoginActivity : AppCompatActivity(){
         }
 
         backRegister_textView.setOnClickListener{
-            finish()
+            val intent = Intent(this, RegisterActivity::class.java)
+            intent.putExtra("message", "register")
+            startActivity(intent)
         }
 
         val signIn = findViewById<View>(R.id.google_signIn) as SignInButton
