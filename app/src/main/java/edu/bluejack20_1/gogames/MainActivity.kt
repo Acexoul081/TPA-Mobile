@@ -115,6 +115,8 @@ class MainActivity : AppCompatActivity() {
     fun logOut(){
         FirebaseAuth.getInstance().signOut()
         User.instance = null
+        val sharePref = PreferencesConfig(this)
+        sharePref.putUser("", "")
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
