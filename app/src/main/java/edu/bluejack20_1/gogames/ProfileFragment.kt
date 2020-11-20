@@ -178,7 +178,7 @@ class ProfileFragment : Fragment() {
             drawable = resources.getDrawable(R.drawable.ic_mail)
         }
         button.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-        button.text = it.getLink()
+        button.text = " "+it.getLink()
         button.layoutParams =
             ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT)
         button.setOnClickListener{

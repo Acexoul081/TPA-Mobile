@@ -2,6 +2,7 @@ package edu.bluejack20_1.gogames.profile
 
 import android.app.ActionBar
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import edu.bluejack20_1.gogames.NewsActivity
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import kotlinx.android.synthetic.main.fragment_update2.*
@@ -80,6 +82,7 @@ class Update2Fragment : Fragment() {
                 , User.getInstance().getGenre()
                 , User.getInstance().getSocmed()
                 , User.getInstance().getEmail())
+            requireActivity().startActivity(Intent(activity as Context, NewsActivity::class.java))
         }
     }
 
