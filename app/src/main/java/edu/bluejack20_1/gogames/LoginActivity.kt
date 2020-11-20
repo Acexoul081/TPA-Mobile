@@ -71,6 +71,9 @@ class LoginActivity : AppCompatActivity(){
                                     User.getInstance().setImagePath(snapshot.child("imagePath").value.toString())
                                     User.getInstance().setGenre(snapshot.child("genre").value.toString())
                                     User.getInstance().setUid(uid.toString())
+                                    if (uid != null) {
+                                        pref.putUser(uid, User.getInstance().getUsername())
+                                    }
                                     val listSosmed : MutableList<Sosmed> = mutableListOf<Sosmed>()
                                     snapshot.child("socmed").children.forEach{snap->
                                         listSosmed.add(snap.getValue(Sosmed :: class.java) as Sosmed)
@@ -89,14 +92,13 @@ class LoginActivity : AppCompatActivity(){
 
                         if (uid != null) {
                             if (email != null) {
-                                pref.putUser(uid, email)
+//                                pref.putUser(uid, User.getInstance().getUsername())
                             }
                         }
 
                     }else{
                         it.exception?.message?.let{
                             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-
                         }
                     }
                 }

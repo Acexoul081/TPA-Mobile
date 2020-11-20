@@ -9,7 +9,7 @@
         android:id="@+id/textViewCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Category"
+        android:text="@string/category"
         android:textSize="30sp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
@@ -70,7 +70,7 @@
         android:id="@+id/devText"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Developer"
+        android:text="@string/developers"
         android:layout_marginStart="20dp"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -84,7 +84,7 @@
         android:id="@+id/gameText"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Game"
+        android:text="@string/games"
         android:layout_marginStart="20dp"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -98,7 +98,7 @@
         android:id="@+id/otherText"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Other"
+        android:text="@string/others"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:textAlignment="center"
@@ -118,7 +118,7 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnSearch"
-        android:hint="search title ?"
+        android:hint="@string/searchingHint"
         android:layout_marginStart="30dp"/>
 
     <com.google.android.material.button.MaterialButton
@@ -126,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/separator"
-        android:text="Search"
+        android:text="@string/search"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"/>

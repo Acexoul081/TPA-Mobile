@@ -48,11 +48,19 @@
     <string name="games">Permainan</string>
     <string name="others">Lainnya</string>
     <string name="hot_threads">Tautan Populer</string>
-    <string name="top_1">Terbaik 1</string>
-    <string name="top_2">Terbaik 2</string>
-    <string name="top_3">Terbaik 3</string>
-    <string name="top_4">Terbaik 4</string>
-    <string name="top_5">Terbaik 5</string>
-    <string name="like">Suka</string>
-    <string name="dislike">Tidak Suka</string>
+    <string name="tautan">Tautan</string>
+    <string name="searchingHint">Judul dicari ?</string>
+    <string-array name="categoryArray">
+        <item>Pengembang</item>
+        <item>Permainan</item>
+        <item>Lainnya</item>
+    </string-array>
+    <string-array name="sort_by">
+        <item>Terbaru</item>
+        <item>Terbanyak Dibicarakan</item>
+    </string-array>
+    <string name="delete">Hapus</string>
+    <string name="edit">Sunting</string>
+    <string name="insert_comment">Masukan Komentar</string>
+    <string name="add">Tambah</string>
 </resources>

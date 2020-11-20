@@ -128,9 +128,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="30dp"
-                android:contentDescription="edit"
+                android:contentDescription="@string/edit"
                 android:paddingStart="30dp"
-                android:text="edit"
+                android:text="@string/edit"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@id/BtnReply"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -145,7 +145,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="27dp"
-                android:hint="Insert Comment"/>
+                android:hint="@string/insert_comment"/>
 
             <View
                 android:id="@+id/threadSeparator"
@@ -165,7 +165,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="25dp"
                 app:layout_constraintTop_toBottomOf="@+id/rvThreadConstraint"
-                android:text="ADD"
+                android:text="@string/add"
                 android:fontFamily="sans-serif-black"
                 android:textSize="16sp"/>
 
