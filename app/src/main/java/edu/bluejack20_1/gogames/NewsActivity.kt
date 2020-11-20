@@ -104,7 +104,7 @@ class NewsActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
         User.instance = null
         val sharePref = PreferencesConfig(this)
-        sharePref.putUser("", "")
+        sharePref.clearSharedPreference()
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
@@ -167,7 +167,6 @@ class NewsActivity : AppCompatActivity() {
                     val gameID : String = referringParams.optString("gameID", "")
                     val userID : String = referringParams.optString("userID", "")
                     if(gameID != "") {
-                        Log.d("Deeplink", gameID)
                         val param = WebParam.getInstance()
                         param.setGameID(gameID)
                     }
