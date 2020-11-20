@@ -22,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import edu.bluejack20_1.gogames.globalClass.WebParam
 import edu.bluejack20_1.gogames.profile.User
 import edu.bluejack20_1.gogames.rawg.RawgApplication
@@ -102,6 +103,8 @@ class NewsActivity : AppCompatActivity() {
     fun logOut(){
         FirebaseAuth.getInstance().signOut()
         User.instance = null
+        val sharePref = PreferencesConfig(this)
+        sharePref.putUser("", "")
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
