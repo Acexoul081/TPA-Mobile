@@ -4,14 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.firebase.database.*
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.allCommunity.Reply.LikeAndDislike
 import edu.bluejack20_1.gogames.allCommunity.Reply.Reply
 import edu.bluejack20_1.gogames.allCommunity.Reply.ReplyAdapter
+import edu.bluejack20_1.gogames.allCommunity.UserProfile
 import edu.bluejack20_1.gogames.allCommunity.createThread.DataThread
 import edu.bluejack20_1.gogames.allCommunity.editThread.EditThread
 import edu.bluejack20_1.gogames.allCommunity.preferThread.PreferThreadAdapter
@@ -60,11 +64,20 @@ class DeveloperThread(
 
         getPreferThread()
 
+        getUser()
+
         val pref = PreferencesConfig(context as Context)
 
 //        pref.putUser("", "")
 
-
+        headerText.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                val fragment = UserProfile(userID)
+                replace(R.id.mainFragment, fragment)
+                addToBackStack(null)
+                commit()
+            }
+        }
 
         if(pref.getUserID().isNullOrBlank()){
             BtnLike.visibility = View.INVISIBLE
@@ -249,14 +262,14 @@ class DeveloperThread(
                                 refLikeDislike.child(userID).setValue(likeAndDislike)
                                 dislike += 1
                                 refLikeDislike.parent?.child("dislike")?.setValue(dislike)
-                                DislikeCount.text = like.toString()
+                                DislikeCount.text = dislike.toString()
                             }
                         } else {
                             val likeAndDislike = LikeAndDislike(userID, "Dislike")
                             refLikeDislike.child(userID).setValue(likeAndDislike)
                             dislike += 1
                             refLikeDislike.parent?.child("dislike")?.setValue(dislike)
-                            DislikeCount.text = like.toString()
+                            DislikeCount.text = dislike.toString()
                         }
                     }
                 }
@@ -304,10 +317,32 @@ class DeveloperThread(
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
+        })
+    }
+
+    private fun getUser(){
+        val ref = FirebaseDatabase.getInstance().reference.child("Users").child(userID)
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    var imagePath = snapshot.child("imagePath").value.toString()
+                    var username = snapshot.child("username").value.toString()
+
+                    if(!imagePath.isNullOrBlank()){
+                        Glide.with(activity as Context).load(imagePath).circleCrop().into(profileImage)
+                    }
+                    if(username.isNullOrBlank()){
+                        usernameUpload.text = "Anonymous"
+                    }else{
+                        usernameUpload.text = username
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
         })
-
-
-
     }
 }

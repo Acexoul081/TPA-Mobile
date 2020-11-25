@@ -24,7 +24,7 @@
         <item>Developer</item>
         <item>Game</item>
         <item>Other</item>
-    </string-array>    
+    </string-array>
     <string-array name="sort_by">
         <item>Newest</item>
         <item>Most Discuss</item>
@@ -72,4 +72,7 @@
     <string name="api_error">Data Not Avaiable API Error</string>
     <string name="like">Like</string>
     <string name="dislike">Dislike</string>
+    <string name="uploaded">uploaded by : </string>
+    <string name="noData">No Data</string>
+    <string name="uploadedThread">Uploaded Thread : </string>
 </resources>
