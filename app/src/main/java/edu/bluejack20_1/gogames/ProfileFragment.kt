@@ -31,6 +31,7 @@ import edu.bluejack20_1.gogames.profile.ExampleDialog
 import edu.bluejack20_1.gogames.profile.Sosmed
 import edu.bluejack20_1.gogames.profile.UpdateProfileActivity
 import edu.bluejack20_1.gogames.profile.User
+import kotlinx.android.synthetic.main.fragment_game_detail.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.ByteArrayOutputStream
 
@@ -54,6 +55,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.invalidateOptionsMenu()
+        val user = User.getInstance()
         if(arguments?.getString("userID") != null){
             database = FirebaseDatabase.getInstance().reference.child("Users").child(requireArguments().getString("userID")!!)
             database.addValueEventListener(object  : ValueEventListener{
@@ -61,7 +63,6 @@ class ProfileFragment : Fragment() {
                     text_view_name.text = snapshot.child("username").value.toString()
                     text_email.text = snapshot.child("email").value.toString()
                     text_view_description.text = snapshot.child("description").value.toString()
-                    updateProfile_btn.visibility = View.INVISIBLE
                     activity?.let {
                         Glide.with(it)
                             .load(snapshot.child("imagePath").value.toString())
@@ -77,9 +78,12 @@ class ProfileFragment : Fragment() {
                 }
 
             })
+            if (arguments?.getString("userID") != user.getUid()){
+                btn_share.visibility = View.INVISIBLE
+                updateProfile_btn.visibility = View.INVISIBLE
+            }
         }
         else{
-            val user = User.getInstance()
             text_view_name.text = user.getUsername()
             text_email.text = user.getEmail()
             text_view_description.text = user.getDescription()
@@ -147,18 +151,18 @@ class ProfileFragment : Fragment() {
                         }
                     }
             }
+        }
 
-            updateProfile_btn.setOnClickListener{
-                startActivity(Intent(this.context, UpdateProfileActivity::class.java))
-            }
-            btn_share.setOnClickListener{
-                val message = "70960.app.link/?userID=" + user.getUid()
-                val intent = Intent()
-                intent.action = Intent.ACTION_SEND
-                intent.putExtra(Intent.EXTRA_TEXT, message)
-                intent.type = "text/plain"
-                startActivity(Intent.createChooser(intent, "Share to : "))
-            }
+        updateProfile_btn.setOnClickListener{
+            startActivity(Intent(this.context, UpdateProfileActivity::class.java))
+        }
+        btn_share.setOnClickListener{
+            val message = "70960.app.link/?userID=" + user.getUid()
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, message)
+            intent.type = "text/plain"
+            startActivity(Intent.createChooser(intent, "Share to : "))
         }
     }
 

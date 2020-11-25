@@ -66,4 +66,10 @@
     <string name="edit">edit</string>
     <string name="insert_comment">Insert Comment</string>
     <string name="add">Add</string>
+    <string name="promotion">Promotion</string>
+    <string name="metacritic" translatable="false">Metacritic</string>
+    <string name="added">Date Added</string>
+    <string name="api_error">Data Not Avaiable API Error</string>
+    <string name="like">Like</string>
+    <string name="dislike">Dislike</string>
 </resources>

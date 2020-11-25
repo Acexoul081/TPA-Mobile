@@ -12,7 +12,7 @@
             android:icon="@drawable/community"/>
         <item
             android:id="@+id/nav_promo"
-            android:title="promo"
+            android:title="@string/promotion"
             android:icon="@drawable/community" />
     </group>
     <group android:checkableBehavior="single">

@@ -144,7 +144,7 @@ class RegisterActivity : AppCompatActivity() {
                 email_editText.isEnabled = true
                 password_editText.isEnabled = true
                 uploadImageToFirebaseStorage()
-                val intent = Intent(this, NewsActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
             .addOnFailureListener{

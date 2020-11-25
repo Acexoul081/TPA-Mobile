@@ -40,33 +40,34 @@ class DealAdapter(private val list: ArrayList<Deal>, private val activity: AppCo
                     val date = (deal.expiry as Double *1000)
                     val lon = date.toLong()
                     dayleft_textview.text = convertDate(lon)
+
+                    val time = dayleft_textview.text.toString().split("-").map { it.toInt() }
+
+                    val calendar = Calendar.getInstance()
+                    calendar.set(Calendar.DAY_OF_MONTH, time[0])
+                    calendar.set(Calendar.MONTH, time[1])
+                    calendar.set(Calendar.HOUR_OF_DAY, 12)
+                    calendar.add(Calendar.DAY_OF_MONTH, -3)
+
+                    createNotificationChannel()
+
+                    val intent = Intent(context, ReminderBroadcast::class.java)
+                    intent.putExtra("message", promo_game_title.text.toString() + " will expired in 3 days. Come get your game")
+                    val pendingIntent : PendingIntent = PendingIntent.getBroadcast(context, calendar.timeInMillis.toInt() , intent, 0)
+                    val alarmManager : AlarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                     //button function
                     notify_button.setOnClickListener{
-                        val time = dayleft_textview.text.toString().split("-").map { it.toInt() }
+                        if(notify_button.isChecked){
+                            alarmManager.set(AlarmManager.RTC_WAKEUP,
+                                calendar.timeInMillis, pendingIntent)
+                        }else{
+                            setCancelButton(pendingIntent, alarmManager, notify_button)
+                        }
 
-                        val calendar = Calendar.getInstance()
-                        calendar.set(Calendar.DAY_OF_MONTH, time[0])
-                        calendar.set(Calendar.MONTH, time[1])
-                        calendar.set(Calendar.HOUR_OF_DAY, 12)
-                        calendar.set(Calendar.SECOND, 0)
-
-                        createNotificationChannel()
-
-                        val intent = Intent(context, ReminderBroadcast::class.java)
-                        intent.putExtra("message", promo_game_title.text.toString() + " will expired in 3 days. Come get your game")
-                        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(context, calendar.timeInMillis.toInt() , intent, 0)
-
-
-                        val alarmManager : AlarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-                        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                            calendar.timeInMillis, pendingIntent)
-                        setCancelButton(pendingIntent, alarmManager, cancelNotify_button)
                     }
                 }
                 else{
                     notify_button.visibility = View.INVISIBLE
-                    cancelNotify_button.visibility = View.INVISIBLE
                 }
             }
         }
