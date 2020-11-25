@@ -163,14 +163,15 @@ class GameDetailFragment : Fragment() {
 
     private fun showError(error: String) {
         Log.d("errorDetail", error)
+        showErrorOnView()
     }
 
     private fun show(gameSingle: GameSingle?) {
         gameSingle?.let {
             details_description_txt.text = Html.fromHtml(it.description)
             details_game_title_txt.text = it.name
-            metacritic_textview.text = "Metacritic : "+ it.metacritic.toString()
-            added_textview.text = "Released : "+ it.released
+            metacritic_textview.text = metacritic_textview.text.toString()+": "+ it.metacritic.toString()
+            added_textview.text = added_textview.text.toString()+": "+ it.released
 
             if(it.backgroundImageURL!=null){
                 LoadImage(details_image, it.backgroundImageURL)
@@ -181,6 +182,17 @@ class GameDetailFragment : Fragment() {
 
         }
 
+    }
+
+    private fun showErrorOnView(){
+        details_image.visibility = View.INVISIBLE
+        details_description_static_txt.visibility = View.INVISIBLE
+        metacritic_textview.visibility = View.INVISIBLE
+        added_textview.visibility = View.INVISIBLE
+        btn_like_news.visibility = View.INVISIBLE
+        btn_dislike_news.visibility = View.INVISIBLE
+        share_btn.visibility = View.INVISIBLE
+        error_textview.visibility = View.VISIBLE
     }
 
     companion object {

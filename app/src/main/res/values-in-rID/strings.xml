@@ -63,4 +63,9 @@
     <string name="edit">Sunting</string>
     <string name="insert_comment">Masukan Komentar</string>
     <string name="add">Tambah</string>
+    <string name="promotion">Promosi</string>
+    <string name="added">Tanggal Ditambahkan</string>
+    <string name="api_error">Data Tidak Tersedia Error API</string>
+    <string name="like">Suka</string>
+    <string name="dislike">Tidak Suka</string>
 </resources>

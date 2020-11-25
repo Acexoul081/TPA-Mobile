@@ -115,10 +115,13 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     }
 
     private fun loadingInProgress() {
+        shimmer_frame_layout.startShimmerAnimation()
         main_games_pb.visibility = View.VISIBLE
     }
 
     private fun loadingIsDone(){
+        shimmer_frame_layout.stopShimmerAnimation()
+        shimmer_frame_layout.visibility = View.GONE
         main_games_pb.visibility = View.GONE
     }
 
@@ -131,6 +134,7 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
                     "",
                     ""
                 )
+            param.setGameID("")
             findNavController().navigate(direction)
         }else{
             games?.let {
