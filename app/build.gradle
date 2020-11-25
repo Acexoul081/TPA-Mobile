@@ -133,4 +133,6 @@ dependencies {
     //shimmer
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
+    implementation 'com.shobhitpuri.custombuttons:google-signin:1.0.0'
+
 }

@@ -35,16 +35,18 @@
         app:layout_constraintStart_toStartOf="@+id/email_editText"
         app:layout_constraintTop_toBottomOf="@+id/email_editText" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button"
+        android:backgroundTint="@color/colorPrimaryDark"
+        app:cornerRadius="15dp"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="@+id/password_editText"
         app:layout_constraintStart_toStartOf="@+id/password_editText"
         app:layout_constraintTop_toBottomOf="@+id/password_editText" />
+
 
     <TextView
         android:id="@+id/backRegister_textView"
