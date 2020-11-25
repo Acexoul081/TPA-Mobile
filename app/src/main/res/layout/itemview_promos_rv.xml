@@ -64,6 +64,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
+                android:background="@color/indigo"
+                android:textColor="@color/White"
+                android:paddingHorizontal="3dp"
                 android:textOff="@string/notify"
                 android:textOn="@string/cancel"/>
 <!--            <Button-->

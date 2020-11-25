@@ -18,6 +18,8 @@
             android:layout_height="wrap_content"
             android:text="@string/title"
             android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:layout_marginLeft="10dp"/>
         <View
             android:layout_width="0dp"
@@ -29,11 +31,15 @@
             android:layout_height="wrap_content"
             android:text="@string/old_price"
             android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:layout_marginRight="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/new_price"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginRight="10dp"/>
         <TextView
@@ -41,6 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/price_cut"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginRight="10dp"/>
     </LinearLayout>
