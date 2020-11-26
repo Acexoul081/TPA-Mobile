@@ -68,7 +68,9 @@
     <string name="api_error">Data Tidak Tersedia Error API</string>
     <string name="like">Suka</string>
     <string name="dislike">Tidak Suka</string>
+    <string name="sign_in">Masuk</string>
     <string name="uploaded">diunggah oleh : </string>
     <string name="noData">Tidak ada data</string>
     <string name="uploadedThread">Tautan Yang Diunggah : </string>
+
 </resources>

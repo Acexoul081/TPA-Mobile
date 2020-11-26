@@ -93,7 +93,7 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
     }
 
         viewModel.viewState.observe(viewLifecycleOwner, Observer { render(it) })
-
+        Log.d("Userrrr", User.getInstance().toString())
         if(user != null && user.getGenre()  != ""){
             viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = user.getGenre())
         }else{
@@ -201,17 +201,23 @@ class GamesFragment : Fragment() , GamesAdapter.RecyclerViewItemClickLister, Ada
                 viewModel.perform(GamesViewIntent.FetchGamesByGenre, genre = parent.getItemAtPosition(pos).toString())
                 if(user != null){
                     user.setGenre(parent.getItemAtPosition(pos).toString())
-                    FirebaseDatabase.getInstance().reference.child("Users").child(user.getUid()).child("genre").setValue(user.getGenre())
-                    val pref = PreferencesConfig(activity as Context)
-                    pref.putUser(user.getUid(), User.getInstance().getUsername()
-                        , User.getInstance().getImagePath()
-                        , User.getInstance().getDescription()
-                        , User.getInstance().getGenre()
-                        , User.getInstance().getSocmed()
-                        , User.getInstance().getEmail())
                 }
 
             }
+            else{
+                viewModel.perform(GamesViewIntent.FetchFutureRelease)
+                if(user != null){
+                    user.setGenre("")
+                }
+            }
+            FirebaseDatabase.getInstance().reference.child("Users").child(user.getUid()).child("genre").setValue(user.getGenre())
+            val pref = PreferencesConfig(activity as Context)
+            pref.putUser(user.getUid(), User.getInstance().getUsername()
+                , User.getInstance().getImagePath()
+                , User.getInstance().getDescription()
+                , User.getInstance().getGenre()
+                , User.getInstance().getSocmed()
+                , User.getInstance().getEmail())
 
         }else{
             Log.d("debug", "gagal ngga ketemu")

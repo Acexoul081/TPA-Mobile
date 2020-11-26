@@ -114,7 +114,7 @@ class LoginActivity : AppCompatActivity(){
             startActivity(intent)
         }
 
-        val signIn = findViewById<View>(R.id.google_signIn) as SignInButton
+        val signIn = findViewById<View>(R.id.google_signIn)
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -152,14 +152,12 @@ class LoginActivity : AppCompatActivity(){
     }
     private fun updateUI(account: FirebaseUser?){
         val dispTxt = findViewById<View>(R.id.testText) as TextView
-        dispTxt.text = account?.displayName
-        signOut.visibility = View.VISIBLE
-        signOut.setOnClickListener{
-            view: View? -> mGoogleSignInClient.signOut().addOnCompleteListener{
-            task: Task<Void> -> dispTxt.text = " "
-            signOut.visibility = View.INVISIBLE
-        }
-        }
+//        signOut.visibility = View.VISIBLE
+//        signOut.setOnClickListener{
+//            view: View? -> mGoogleSignInClient.signOut().addOnCompleteListener{
+//            task: Task<Void> -> dispTxt.text = " "
+//        }
+//        }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -171,8 +169,6 @@ class LoginActivity : AppCompatActivity(){
                     val user = auth.currentUser
                     saveGoogleUserToDatabase(user)
                     updateUI(user)
-                    val intent = Intent(this, NewsActivity::class.java)
-                    startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("error", "signInWithCredential:failure", task.exception)
@@ -184,6 +180,7 @@ class LoginActivity : AppCompatActivity(){
     private fun saveGoogleUserToDatabase(user: FirebaseUser?){
 
         database = FirebaseDatabase.getInstance().reference.child("Users").child(user?.uid.toString())
+        val pref = PreferencesConfig(this)
         database.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
@@ -199,6 +196,17 @@ class LoginActivity : AppCompatActivity(){
                         listSosmed.add(it.getValue(Sosmed :: class.java) as Sosmed)
                     }
                     User.getInstance().setSocmed(listSosmed)
+
+                    if (User.getInstance().getUid() != "") {
+                        pref.putUser(User.getInstance().getUid(), User.getInstance().getUsername()
+                            , User.getInstance().getImagePath()
+                            , User.getInstance().getDescription()
+                            , User.getInstance().getGenre()
+                            , User.getInstance().getSocmed()
+                            , User.getInstance().getEmail())
+                    }
+
+                    moveToNews()
                 }
                 else{
                     val temp = User.getInstance()
@@ -207,7 +215,17 @@ class LoginActivity : AppCompatActivity(){
                     temp.setEmail(user?.email.toString())
                     temp.setUid(user?.uid.toString())
                     database.setValue(temp)
+                    if (temp.getUid() != "") {
+                        pref.putUser(User.getInstance().getUid(), User.getInstance().getUsername()
+                            , User.getInstance().getImagePath()
+                            , User.getInstance().getDescription()
+                            , User.getInstance().getGenre()
+                            , User.getInstance().getSocmed()
+                            , User.getInstance().getEmail())
+                    }
                 }
+
+
             }
 
             override fun onCancelled(error: DatabaseError) {
