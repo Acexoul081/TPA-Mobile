@@ -1,6 +1,5 @@
 package edu.bluejack20_1.gogames.allCommunity
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,8 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import edu.bluejack20_1.gogames.R
 import kotlinx.android.synthetic.main.fragment_thread_category.*
-import kotlin.math.log
-
 
 class threadCategory : Fragment(R.layout.fragment_thread_category) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -18,7 +15,7 @@ class threadCategory : Fragment(R.layout.fragment_thread_category) {
         btnListener()
     }
     private fun btnListener(){
-        DeveloperCategory.setOnClickListener {
+        developerLayout.setOnClickListener {
             val fragment = DeveloperForum("Developer")
             val act: FragmentActivity? = activity
             act?.supportFragmentManager?.beginTransaction()?.apply {
@@ -27,7 +24,7 @@ class threadCategory : Fragment(R.layout.fragment_thread_category) {
                 commit()
             }
         }
-        GameCategory.setOnClickListener {
+        gamesLayout.setOnClickListener {
             val fragment = DeveloperForum("Game")
                 activity?.supportFragmentManager?.beginTransaction()?.apply {
                     replace(R.id.mainFragment, fragment)
@@ -35,7 +32,7 @@ class threadCategory : Fragment(R.layout.fragment_thread_category) {
                     commit()
                 }
             }
-        OtherCategory.setOnClickListener {
+        otherLayout.setOnClickListener {
             val fragment = DeveloperForum("Other")
             activity?.supportFragmentManager?.beginTransaction()?.apply {
                 replace(R.id.mainFragment, fragment)

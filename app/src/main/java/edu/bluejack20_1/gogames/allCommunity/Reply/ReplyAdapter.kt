@@ -6,8 +6,8 @@ import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import edu.bluejack20_1.gogames.MainActivity
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
@@ -15,7 +15,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.fragment_edit_thread.view.*
 import kotlinx.android.synthetic.main.thread_reply.view.*
 
 class ReplyAdapter(private val replies: List<Reply>, private val category: String, private val threadId: String, var parentContext: Context) : RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder>() {
@@ -33,6 +32,8 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
             description.text = replies[position].description
             LikeCount.text = replies[position].like.toString()
             DislikeCount.text = replies[position].dislike.toString()
+
+
 
             val reff = FirebaseDatabase.getInstance().reference.child("Thread").child(category).child(threadId).child("Replies").child(replies[position].id).child("LikeAndDislike")
             val activity: MainActivity = parentContext as MainActivity
@@ -83,18 +84,24 @@ class ReplyAdapter(private val replies: List<Reply>, private val category: Strin
             }
 
             btnDeletex.setOnClickListener {
-                val ref = FirebaseDatabase.getInstance().reference.child("Thread").child(category).child(threadId).child("Replies").child(replies[position].id)
-                ref.addListenerForSingleValueEvent(object  : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if(snapshot.exists()){
-                            snapshot.ref.removeValue()
-                        }
-                    }
+                MaterialAlertDialogBuilder(activity).setTitle("Delete").setMessage("Are you sure want to delete this reply ?")
+                    .setNegativeButton("Decline") {
+                            dialog, which ->
+                    }.setPositiveButton("Accept"){
+                            dialog, which ->
+                        val ref = FirebaseDatabase.getInstance().reference.child("Thread").child(category).child(threadId).child("Replies").child(replies[position].id)
+                        ref.addListenerForSingleValueEvent(object  : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if(snapshot.exists()){
+                                    snapshot.ref.removeValue()
+                                }
+                            }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-                })
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+                    }.show()
             }
 
             BtnLike.setOnClickListener{

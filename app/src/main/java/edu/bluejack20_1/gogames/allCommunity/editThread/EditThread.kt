@@ -2,6 +2,7 @@ package edu.bluejack20_1.gogames.allCommunity.editThread
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -25,6 +26,8 @@ class EditThread(var id: String, var title: String, var desc: String, var catego
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        editTitle.setText(title)
+        editDescription.setText(desc)
 
         BtnCancel.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.apply {
@@ -74,9 +77,6 @@ class EditThread(var id: String, var title: String, var desc: String, var catego
             MaterialAlertDialogBuilder(activity as Context)
                 .setTitle("Delete")
                 .setMessage("Are you sure want to delete this thread ?")
-                .setNeutralButton("Cancel") { dialog, which ->
-
-                }
                 .setNegativeButton("Decline") { dialog, which ->
                     // Respond to negative button press
 
