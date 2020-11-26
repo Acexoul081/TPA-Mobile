@@ -42,17 +42,19 @@ class EditThread(var id: String, var title: String, var desc: String, var catego
             titleE = editTitle.text?.toString().toString()
             descriptionE = editDescription.text?.toString().toString()
 
-            if(titleE == "" && descriptionE == ""){
+            if(titleE.isNullOrBlank() && descriptionE.isNullOrBlank()){
                 Toast.makeText(activity, "title / description must be filled !", Toast.LENGTH_SHORT).show();
             }else{
                 reff = FirebaseDatabase.getInstance().reference.child("Thread").child(category).child(id)
                 if(editCategory.selectedItem.toString() == category){
                     reff.child("title").setValue(titleE)
                     reff.child("description").setValue(descriptionE)
+                    Log.d("test", "test")
                     redirect(false)
                 }else{
                     reff.child("title").setValue(titleE)
                     reff.child("description").setValue(descriptionE)
+                    reff.child("category").setValue(editCategory.selectedItem.toString())
                     reff.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if(snapshot.exists()){
