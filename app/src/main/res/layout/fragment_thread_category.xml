@@ -30,84 +30,114 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewCategory" />
 
-    <ImageView
-        android:id="@+id/DeveloperCategory"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/developer"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/GameCategory"
-        app:layout_constraintTop_toBottomOf="@id/searchText" />
-
-
-    <ImageView
-        android:id="@+id/GameCategory"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/game"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@id/DeveloperCategory"
-        app:layout_constraintEnd_toStartOf="@id/OtherCategory"
-        app:layout_constraintTop_toBottomOf="@id/searchText" />
-
-
-    <ImageView
-        android:id="@+id/OtherCategory"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/other"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/developerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/customborder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/GameCategory"
-        app:layout_constraintTop_toBottomOf="@id/searchText" />
-
-    <TextView
-        android:id="@+id/devText"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="@string/developers"
-        android:layout_marginStart="20dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-medium"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toStartOf="@id/gameText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/DeveloperCategory" />
+        app:layout_constraintTop_toBottomOf="@id/searchText">
 
-    <TextView
-        android:id="@+id/gameText"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="@string/games"
-        android:layout_marginStart="20dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-medium"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@id/devText"
-        app:layout_constraintEnd_toStartOf="@id/otherText"
-        app:layout_constraintTop_toBottomOf="@id/DeveloperCategory" />
+        <ImageView
+            android:id="@+id/DeveloperCategory"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/developer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <TextView
-        android:id="@+id/otherText"
-        android:layout_width="100dp"
+        <TextView
+            android:id="@+id/devText"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/developers"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/DeveloperCategory" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gamesLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/others"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-medium"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/gameText"
+        android:background="@drawable/customborder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/DeveloperCategory" />
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/developerLayout">
+
+        <ImageView
+            android:id="@+id/GameCategory"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/game"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/gameText"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/games"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/GameCategory"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/otherLayout"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/customborder"
+        app:layout_constraintTop_toBottomOf="@id/gamesLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/OtherCategory"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/other"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/otherText"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/others"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/OtherCategory"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/searchText"

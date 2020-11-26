@@ -17,7 +17,7 @@
                 android:name="edu.bluejack20_1.gogames.allCommunity.threadCategory"
                 android:id="@+id/CategoryFragment"
                 android:layout_width="match_parent"
-                android:layout_height="298dp"
+                android:layout_height="530dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/separator"/>
 
