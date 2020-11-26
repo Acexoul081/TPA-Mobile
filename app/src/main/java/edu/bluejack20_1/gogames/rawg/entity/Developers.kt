@@ -12,18 +12,13 @@
  *
  */
 
-package com.ekn.gruzer.rawg.entity
+package edu.bluejack20_1.gogames.rawg.entity
 
-data class Person(
-    val id: Int,
-    val name: String,
-    val slug: String,
-    val imageURL: String,
-    val imageBackgroundURL: String,
-    val gameCount: Int,
-    val description:String,
-    val reviewsCount:Int,
-    val rating:String,
-    val ratingTop:Int,
-    val updated:String
+data class Developer(
+    val id:Int,
+    val name:String,
+    val slug:String,
+    val gameCount:Int,
+    val imageBackgroundURL:String,
+    val description:String
 )

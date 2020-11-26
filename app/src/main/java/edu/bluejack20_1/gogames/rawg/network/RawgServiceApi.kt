@@ -12,11 +12,30 @@
  *
  */
 
-package com.ekn.gruzer.rawg.network
+package edu.bluejack20_1.gogames.rawg.network
 
 import com.ekn.gruzer.rawg.entity.*
+import com.ekn.gruzer.rawg.entity.Game
+import com.ekn.gruzer.rawg.entity.GameSingle
+import com.ekn.gruzer.rawg.entity.Genre
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import edu.bluejack20_1.gogames.rawg.entity.*
+import edu.bluejack20_1.gogames.rawg.entity.Achievement
+import edu.bluejack20_1.gogames.rawg.entity.Developer
+import edu.bluejack20_1.gogames.rawg.entity.GamePersonList
+import edu.bluejack20_1.gogames.rawg.entity.GameStoreFull
+import edu.bluejack20_1.gogames.rawg.entity.Person
+import edu.bluejack20_1.gogames.rawg.entity.Platform
+import edu.bluejack20_1.gogames.rawg.entity.PlatformParentSingle
+import edu.bluejack20_1.gogames.rawg.entity.Position
+import edu.bluejack20_1.gogames.rawg.entity.Publisher
+import edu.bluejack20_1.gogames.rawg.entity.RecentPosts
+import edu.bluejack20_1.gogames.rawg.entity.ScreenShot
+import edu.bluejack20_1.gogames.rawg.entity.Store
+import edu.bluejack20_1.gogames.rawg.entity.Tag
+import edu.bluejack20_1.gogames.rawg.entity.TwitchStreams
+import edu.bluejack20_1.gogames.rawg.entity.YoutubeChannels
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET

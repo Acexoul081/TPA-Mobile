@@ -12,14 +12,20 @@
  *
  */
 
-package com.ekn.gruzer.rawg.entity
+package edu.bluejack20_1.gogames.rawg.network
 
-data class Tag(
-    val id:Int,
-    val name:String,
-    val slug:String,
-    val gameCount:Int,
-    val imageBackgroundURL:String,
-    val language:String,
-    val description:String
+import com.google.gson.annotations.SerializedName
+
+
+
+data class RawgData<T>(
+    @SerializedName("count")
+    val count: Int,
+    @SerializedName("next")
+    val next: String,
+    @SerializedName("previous")
+    var prev: String,
+    @SerializedName("results")
+    var result: T
 )
+

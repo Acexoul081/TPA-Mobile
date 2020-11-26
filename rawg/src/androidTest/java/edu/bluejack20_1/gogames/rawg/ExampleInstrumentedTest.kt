@@ -12,7 +12,7 @@
  *
  */
 
-package com.ekn.gruzer.rawg
+package edu.bluejack20_1.gogames.rawg
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

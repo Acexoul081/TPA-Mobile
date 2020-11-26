@@ -12,7 +12,7 @@
  *
  */
 
-package com.ekn.gruzer.rawg.network
+package edu.bluejack20_1.gogames.rawg.network
 
 import okhttp3.Request
 import retrofit2.*

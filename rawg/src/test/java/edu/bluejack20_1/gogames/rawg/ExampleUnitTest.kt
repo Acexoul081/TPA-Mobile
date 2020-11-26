@@ -12,20 +12,20 @@
  *
  */
 
-package com.ekn.gruzer.rawg.network
+package edu.bluejack20_1.gogames.rawg
 
-import com.google.gson.annotations.SerializedName
+import org.junit.Test
 
+import org.junit.Assert.*
 
-
-data class RawgData<T>(
-    @SerializedName("count")
-    val count: Int,
-    @SerializedName("next")
-    val next: String,
-    @SerializedName("previous")
-    var prev: String,
-    @SerializedName("results")
-    var result: T
-)
-
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
+}

@@ -12,14 +12,10 @@
  *
  */
 
-package com.ekn.gruzer.rawg.entity
+package edu.bluejack20_1.gogames.rawg.entity
 
-data class Genre(
-    val id:Int,
-    val name:String,
-    val slug:String,
-    val gamesCount:Int,
-    val imageBackgroundURL:String,
-    val description:String
+data class Position(
+    val id: Int,
+    val slug: String,
+    val name: String
 )
-

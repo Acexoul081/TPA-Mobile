@@ -1,6 +1,6 @@
 package edu.bluejack20_1.gogames.rawg.ui.details
 
-import com.ekn.gruzer.rawg.entity.GameSingle
+import edu.bluejack20_1.gogames.rawg.entity.GameSingle
 
 sealed class DetailsViewState {
     object isLoading: DetailsViewState()

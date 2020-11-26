@@ -1,13 +1,12 @@
 package edu.bluejack20_1.gogames.rawg.ui.games
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ekn.gruzer.rawg.entity.Game
-import com.ekn.gruzer.rawg.entity.Genre
-import com.ekn.gruzer.rawg.network.RawgData
+import edu.bluejack20_1.gogames.rawg.entity.Game
+import edu.bluejack20_1.gogames.rawg.entity.Genre
+import edu.bluejack20_1.gogames.rawg.network.RawgData
 import edu.bluejack20_1.gogames.rawg.repository.DataState
 import edu.bluejack20_1.gogames.rawg.repository.GamesRepository
 import edu.bluejack20_1.gogames.rawg.repository.GenreRepository

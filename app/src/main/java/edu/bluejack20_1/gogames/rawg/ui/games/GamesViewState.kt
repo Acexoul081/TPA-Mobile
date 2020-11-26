@@ -1,7 +1,7 @@
 package edu.bluejack20_1.gogames.rawg.ui.games
 
-import com.ekn.gruzer.rawg.entity.Game
-import com.ekn.gruzer.rawg.entity.Genre
+import edu.bluejack20_1.gogames.rawg.entity.Game
+import edu.bluejack20_1.gogames.rawg.entity.Genre
 
 sealed class GamesViewState {
     object IsLoading : GamesViewState()

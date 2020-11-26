@@ -1,8 +1,8 @@
 package edu.bluejack20_1.gogames.rawg.repository
 
-import com.ekn.gruzer.rawg.network.RawgApiResult
-import com.ekn.gruzer.rawg.network.RawgCallAdapterFactory
-import com.ekn.gruzer.rawg.network.RawgData
+import edu.bluejack20_1.gogames.rawg.network.RawgApiResult
+import edu.bluejack20_1.gogames.rawg.network.RawgCallAdapterFactory
+import edu.bluejack20_1.gogames.rawg.network.RawgData
 
 /*
  * Copyright 2019 Evstafiev Konstantin
@@ -18,9 +18,26 @@ import com.ekn.gruzer.rawg.network.RawgData
  *
  */
 
-import com.ekn.gruzer.rawg.entity.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import edu.bluejack20_1.gogames.rawg.entity.Achievement
+import edu.bluejack20_1.gogames.rawg.entity.Developer
+import edu.bluejack20_1.gogames.rawg.entity.Game
+import edu.bluejack20_1.gogames.rawg.entity.GamePersonList
+import edu.bluejack20_1.gogames.rawg.entity.GameSingle
+import edu.bluejack20_1.gogames.rawg.entity.GameStoreFull
+import edu.bluejack20_1.gogames.rawg.entity.Genre
+import edu.bluejack20_1.gogames.rawg.entity.Person
+import edu.bluejack20_1.gogames.rawg.entity.Platform
+import edu.bluejack20_1.gogames.rawg.entity.PlatformParentSingle
+import edu.bluejack20_1.gogames.rawg.entity.Position
+import edu.bluejack20_1.gogames.rawg.entity.Publisher
+import edu.bluejack20_1.gogames.rawg.entity.RecentPosts
+import edu.bluejack20_1.gogames.rawg.entity.ScreenShot
+import edu.bluejack20_1.gogames.rawg.entity.Store
+import edu.bluejack20_1.gogames.rawg.entity.Tag
+import edu.bluejack20_1.gogames.rawg.entity.TwitchStreams
+import edu.bluejack20_1.gogames.rawg.entity.YoutubeChannels
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET

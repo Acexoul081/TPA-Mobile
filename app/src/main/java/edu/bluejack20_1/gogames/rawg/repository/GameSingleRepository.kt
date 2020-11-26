@@ -1,6 +1,6 @@
 package edu.bluejack20_1.gogames.rawg.repository
 
-import com.ekn.gruzer.rawg.entity.GameSingle
+import edu.bluejack20_1.gogames.rawg.entity.GameSingle
 
 class GameSingleRepository(private val remoteSource: RemoteSource) : Repository<GameSingle>(){
 

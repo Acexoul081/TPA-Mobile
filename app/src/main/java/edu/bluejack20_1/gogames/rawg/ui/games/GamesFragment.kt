@@ -2,8 +2,6 @@ package edu.bluejack20_1.gogames.rawg.ui.games
 
 import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,26 +12,18 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavDirections
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ekn.gruzer.rawg.entity.Game
-import com.ekn.gruzer.rawg.entity.Genre
-import com.google.firebase.auth.FirebaseAuth
+import edu.bluejack20_1.gogames.rawg.entity.Game
+import edu.bluejack20_1.gogames.rawg.entity.Genre
 import com.google.firebase.database.FirebaseDatabase
-import edu.bluejack20_1.gogames.MainActivity
-import edu.bluejack20_1.gogames.NewsActivity
 import edu.bluejack20_1.gogames.R
 import edu.bluejack20_1.gogames.globalClass.PreferencesConfig
 import edu.bluejack20_1.gogames.globalClass.WebParam
 import edu.bluejack20_1.gogames.profile.User
 import edu.bluejack20_1.gogames.rawg.RawgApplication
 import edu.bluejack20_1.gogames.rawg.di.gameview.GameScreenViewModelModule
-import io.branch.referral.Branch
-import io.branch.referral.BranchError
 import kotlinx.android.synthetic.main.fragment_games.*
-import org.json.JSONObject
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 

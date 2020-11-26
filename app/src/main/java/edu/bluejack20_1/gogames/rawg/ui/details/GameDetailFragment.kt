@@ -11,11 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.ekn.gruzer.rawg.entity.GameSingle
+import edu.bluejack20_1.gogames.rawg.entity.GameSingle
 import com.google.firebase.database.*
 import edu.bluejack20_1.gogames.R
-import edu.bluejack20_1.gogames.profile.Sosmed
 import edu.bluejack20_1.gogames.profile.User
 import edu.bluejack20_1.gogames.rawg.RawgApplication
 import edu.bluejack20_1.gogames.rawg.di.detailview.DetailedScreenViewModelModule
@@ -23,7 +21,6 @@ import edu.bluejack20_1.gogames.rawg.ui.details.viewmodel.DetailViewIntent
 import edu.bluejack20_1.gogames.rawg.ui.details.viewmodel.DetailsViewModel
 import edu.bluejack20_1.gogames.rawg.utils.LoadImage
 import kotlinx.android.synthetic.main.fragment_game_detail.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match

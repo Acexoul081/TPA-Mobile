@@ -1,7 +1,7 @@
 package edu.bluejack20_1.gogames.rawg.repository
 
-import com.ekn.gruzer.rawg.entity.Genre
-import com.ekn.gruzer.rawg.network.RawgData
+import edu.bluejack20_1.gogames.rawg.entity.Genre
+import edu.bluejack20_1.gogames.rawg.network.RawgData
 
 class GenreRepository (private val remote: RemoteSource): Repository<RawgData<List<Genre>>>(){
     suspend fun getGenres():  DataState<RawgData<List<Genre>>> {

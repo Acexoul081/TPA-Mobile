@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.ekn.gruzer.rawg.entity.Game
+import edu.bluejack20_1.gogames.rawg.entity.Game
 import edu.bluejack20_1.gogames.R
 import kotlinx.android.synthetic.main.itemview_games_rv.view.*
 
@@ -49,7 +49,7 @@ class GamesAdapter (val listener: RecyclerViewItemClickLister) :
         val image = itemView.game_title_img
         val title = itemView.game_title_txt
 
-        fun bind(game:Game): View{
+        fun bind(game: Game): View{
             title.text = game.name
 
             val requestOptions = RequestOptions()

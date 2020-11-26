@@ -12,13 +12,14 @@
  *
  */
 
-package com.ekn.gruzer.rawg.entity
+package edu.bluejack20_1.gogames.rawg.entity
 
-data class Publisher(
+data class Tag(
     val id:Int,
     val name:String,
     val slug:String,
     val gameCount:Int,
     val imageBackgroundURL:String,
+    val language:String,
     val description:String
 )

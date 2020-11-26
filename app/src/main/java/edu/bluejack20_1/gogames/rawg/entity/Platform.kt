@@ -12,7 +12,7 @@
  *
  */
 
-package com.ekn.gruzer.rawg.entity
+package edu.bluejack20_1.gogames.rawg.entity
 
 data class Platform(val id: Int,
                     val name:String,

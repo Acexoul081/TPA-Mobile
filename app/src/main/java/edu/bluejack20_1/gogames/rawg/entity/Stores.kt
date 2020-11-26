@@ -12,11 +12,12 @@
  *
  */
 
-package com.ekn.gruzer.rawg.entity
+package edu.bluejack20_1.gogames.rawg.entity
 
-data class Developer(
+data class Store(
     val id:Int,
     val name:String,
+    val domain:String,
     val slug:String,
     val gameCount:Int,
     val imageBackgroundURL:String,

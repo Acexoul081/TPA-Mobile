@@ -1,9 +1,7 @@
 package edu.bluejack20_1.gogames.rawg.repository
 
-import com.ekn.gruzer.rawg.entity.Game
-import com.ekn.gruzer.rawg.entity.Genre
-import com.ekn.gruzer.rawg.network.RawgApiResult
-import com.ekn.gruzer.rawg.network.RawgData
+import edu.bluejack20_1.gogames.rawg.entity.Game
+import edu.bluejack20_1.gogames.rawg.network.RawgData
 
 class GamesRepository (private val remote: RemoteSource): Repository<RawgData<List<Game>>>(){
     suspend fun getGames(dates: String? = null, keyword: String?=null, genre: String? = null): DataState<RawgData<List<Game>>>{

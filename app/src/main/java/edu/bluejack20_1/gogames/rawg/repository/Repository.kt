@@ -1,6 +1,6 @@
 package edu.bluejack20_1.gogames.rawg.repository
 
-import com.ekn.gruzer.rawg.network.RawgApiResult
+import edu.bluejack20_1.gogames.rawg.network.RawgApiResult
 
 abstract class Repository <R> {
     fun handleResult(response: RawgApiResult<R>) = when (response){

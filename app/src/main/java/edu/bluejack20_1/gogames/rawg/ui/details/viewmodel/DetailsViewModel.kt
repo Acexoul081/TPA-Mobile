@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ekn.gruzer.rawg.entity.GameSingle
+import edu.bluejack20_1.gogames.rawg.entity.GameSingle
 import edu.bluejack20_1.gogames.rawg.repository.DataState
 import edu.bluejack20_1.gogames.rawg.repository.GameSingleRepository
 import edu.bluejack20_1.gogames.rawg.ui.details.DetailsViewState
