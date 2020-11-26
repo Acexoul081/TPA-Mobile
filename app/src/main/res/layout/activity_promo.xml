@@ -59,7 +59,14 @@
         android:layout_height="0dp"
         android:layout_marginTop="25dp"
         />
-
+    <ProgressBar
+        android:id="@+id/promo_pb"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/Navigation"
         android:layout_width="wrap_content"

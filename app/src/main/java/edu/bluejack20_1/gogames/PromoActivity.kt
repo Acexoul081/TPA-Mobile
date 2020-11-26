@@ -43,7 +43,7 @@ class PromoActivity : AppCompatActivity() {
 
         rvDeal.setHasFixedSize(true)
         rvDeal.layoutManager = LinearLayoutManager(this)
-
+        promo_pb.visibility = View.VISIBLE
         RetrofitClient.instance.getDeals().enqueue(object: Callback<ItadResult>{
             override fun onResponse(
                 call: Call<ItadResult>,
@@ -53,12 +53,15 @@ class PromoActivity : AppCompatActivity() {
                 response.body()?.let { list.addAll(it.data.list) }
                 val adapter = DealAdapter(list, getAct())
                 rvDeal.adapter = adapter
+                promo_pb.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<ItadResult>, t: Throwable) {
                 Log.d("inDebug", t.toString())
                 Log.d("inDebug", call.toString())
+                promo_pb.visibility = View.GONE
             }
+
         })
 
         toggle = ActionBarDrawerToggle(this, drawer_layoutp, R.string.open_navigation, R.string.close_navigation)
